@@ -4,40 +4,63 @@
     
 <MyscreenApp>:    
     orientation:'vertical'
-    btx:_sta_btn
-    tlb:_time_lab
+    lb1:_lb_1
+    lb2:_lb_2
+    lb3:_lb_3
+	txt1:_txt1
+	txt2:_txt2
+	txt3:_txt3
         
     GridLayout:
         cols: 3
         spacing:10
-        padding:10,40,10,10
+        padding:10,50,10,10
         row_force_default:True
         row_default_height:58
-        Button:
-            id:_sta_btn
+        Label:
+            id:_lb_1
             text: '状态'
             font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
             color: .8,.9,0,1
-            font_size: 32               
-        Button:
+            font_size: 32
+			bkcolor:[1,0,0,.5]
+			canvas:
+				Color:
+					rgba:self.bkcolor
+				Ellipse:
+					pos:self.pos[0]+self.size[0]/7,self.pos[1]-self.size[0]/6
+					size:self.size[0]*0.75,self.size[0]*0.7
+        Label:
+			id:_lb_2
             text: '可运行'
             font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-            pos: 100,0
-            size: 100, 50
             color: .8,.9,0,.2
             font_size: 32
-        Button:
-            id:_k_btn
+			bkcolor:[1,0,0,.5]
+			canvas:
+				Color:
+					rgba:self.bkcolor
+				Ellipse:
+					pos:self.pos[0]+self.size[0]/7,self.pos[1]-self.size[0]/6
+					size:self.size[0]*0.75,self.size[0]*0.7
+        Label:
+            id:_lb_3
             text: '控制杆'
             font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
             color: .8,.6,0,1
             font_size: 32
-            background_color:1,0,0,.3
+			bkcolor:[1,0,0,.5]
+			canvas:
+				Color:
+					rgba:self.bkcolor
+				Ellipse:
+					pos:self.pos[0]+self.size[0]/7,self.pos[1]-self.size[0]/6
+					size:self.size[0]*0.75,self.size[0]*0.7
             
     GridLayout:
         cols: 3
         spacing:10
-        padding:10,10,10,60
+        padding:10,0,10,60
         row_force_default:True
         row_default_height:68
 
@@ -45,48 +68,36 @@
             text:'面条长度'
             font_size: 32
             font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-            background_color:1,0,1,.1
-
         Label:
-            id:_time_lab
             text:'时间'
             font_size: 40
             font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-            canvas:
-                Color:
-                    rgba:0,1,0,.1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
         Label:
-            id:_fs_lab
             text:'份数'
             font_size: 40
-            font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'            
-            canvas:
-                Color:
-                    rgba:0,1,0,.5
-                Line:
-                    circle: self.pos[0],self.pos[1],50
-        Spinner:
-            id:sp_btn
-            text: 'Ho1'
-            font_size: 40
-            size_hine:None,None
-            size:100,40
-            values:{'1','2','3','4','5','6','7','8','9','10','11','4','5','2','3','4','5','2','3','4','5'}
-            on_release:root.show_selected_value(sp_btn)
+            font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+
         TextInput:
-            text: '65'
+            id:_txt1
+            text: '55'
             multiline:False
             font_size: 40
-            padding:40,10,10,0            
+            padding:40,10,10,0
+			on_text_validate:root.on_enter(self.text)
         TextInput:
+            id:_txt2
+            text: '12'
+            multiline:False
+            font_size: 40
+            padding:40,10,10,0
+			on_text_validate:root.on_enter(self.text)
+        TextInput:
+            id:_txt3
             text: '1'
-            text_align: "center"
             multiline:False
             font_size: 40
-            padding:40,10,10,0  
+            padding:40,10,10,0
+			on_text_validate:root.on_enter(self.text)
             
     ToggleButton:
         id:tg_btn
@@ -101,12 +112,15 @@
         padding:10
         
         Button:
+            id:_btn_b1
             text:'滚筒'
             font_size: 40
             font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
             color: .8,.9,0,1
             font_size: 32
+            on_press:root.press_btn_b1(_btn_b1)
         Button:
+            id:_btn_b2
             text:'水泵'
             font_size: 40
             font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
@@ -114,9 +128,12 @@
             size: 100, 50
             color: .8,.9,0,1
             font_size: 32
+            on_press:root.press_btn_b2(_btn_b2)
         Button:
+            id:_btn_b3
             text:'漏斗'
             font_size: 40
             font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
             color: .8,.9,0,1
             font_size: 32
+            on_release:root.press_btn_b3(_btn_b3)
