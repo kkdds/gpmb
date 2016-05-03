@@ -1,18 +1,18 @@
 import kivy
-kivy.require('1.8.6') # replace with your current kivy version !
+kivy.require('1.0.6') # replace with your current kivy version !
 
 from kivy.app import App
-from kivy.uix.widget import Widget
 from kivy.uix.button import Button
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.image import Image
 from kivy.uix.label import Label
+# textinput need install xclip
 from kivy.uix.textinput import TextInput
 from kivy.uix.vkeyboard import VKeyboard
 from kivy.clock import Clock
-from kivy.graphics import *
+from kivy.graphics import Color,Ellipse
 
 import RPi.GPIO as GPIO
     
@@ -59,12 +59,9 @@ def up_sta(self):
 		
 class TestApp(App):
 	def build(self):
-		# Start flashing the LED
 		myscr=MyscreenApp()
 		Clock.schedule_interval(up_sta,1/5)
 		return myscr
-		#return Button()
-		#return Button(text='hhh')
 
 if __name__ == '__main__':
 	TestApp().run()
