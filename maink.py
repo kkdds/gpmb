@@ -22,20 +22,15 @@ class MyscreenApp(BoxLayout):
     # This callback will be bound to the LED toggle and Beep button:
     def press_callback(self,obj):
         #print("Button pressed,")
-        if obj.state == "down":
+        if obj.state == "down" and self.r_sta==False:
             #print ("button on",datetime.datetime.now())
             obj.text='Running'
-            self.lb2.text='Rrrr'
-            self.lb2.bkcolor=[0,1,0,.5]
-            self.lb1.bkcolor=[0,1,0,.5]
             #GPIO.output(ledPin, GPIO.HIGH)
             #self.start_loop()
         else:
             print ("button off")
             obj.text='Stopping'
-            self.lb2.text='ppps'
-            self.lb2.bkcolor=[1,0,0,.5]
-            self.lb1.bkcolor=[1,0,0,.5]
+            obj.state = "normal"
             self.txt3.text='1'
             #GPIO.output(ledPin, GPIO.LOW)
 
@@ -91,6 +86,25 @@ class MyscreenApp(BoxLayout):
             self.txt3.disabled=True
             print("start loop : ",datetime.datetime.now())
             Clock.schedule_once(self.sch_m1,3)
+                        
+        if self.r_sta:
+            self.lb1.bkcolor=[0,1,0,.5]
+        else:
+            self.lb1.bkcolor=[1,0,0,.5]
+            
+        if 0:
+            self.lb2.text='准备'
+            self.lb2.bkcolor=[1,0,0,.5]
+            self.tgbtn.disabled=True
+        else:
+            self.lb2.text='就绪'
+            self.lb2.bkcolor=[0,1,0,.5]
+            self.tgbtn.disabled=False
+            
+        if 1:
+            self.lb3.bkcolor=[0,1,0,.5]
+        else:
+            self.lb3.bkcolor=[1,0,0,.5]
 
         try:
             if int(self.txt3.text)==0:

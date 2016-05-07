@@ -72,3 +72,40 @@ sudo smbpasswd -a pi
 or
 sudo service samba restart
 
+
+禁用屏保和休眠
+
+/etc/lightdm/lightdm.conf
+
+- locate [Seat Defaults] section
+- edit existing line "#xserver-command=X"
+and change text to
+
+xserver-command=X -s o -dpms
+
+或者安装xscreensaver，然后在系统设置里面禁用屏保
+
+
+#feh-小巧的查看图片工具
+
+feh -Y -x -q -D 5 -B black -F -Z -z -r /media/
+man feh
+-Z Auto Zoom
+
+-x Borderless
+
+-F Fullscreen
+
+-Y hide pointer
+
+-B image background
+
+-q quiet no error reporting
+
+-z Randomise
+
+-r Recursive search all folders in folders
+
+-D Slide delay in seconds
+
+
