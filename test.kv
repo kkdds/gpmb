@@ -7,9 +7,12 @@
 	lb1:_lb_1.__self__
 	lb2:_lb_2.__self__
 	lb3:_lb_3.__self__
-	txt1:_txt1.__self__
-	txt2:_txt2.__self__
+	time2:_time2.__self__
+	time5:_time5.__self__
 	txt3:_txt3.__self__
+	time1:_time1.__self__
+	time3:_time3.__self__
+	time4:_time4.__self__
 	tgbtn:tg_btn.__self__
 	btnb1:_btn_b1.__self__
 	btnb2:_btn_b2.__self__
@@ -20,7 +23,7 @@
 		spacing:10
 		padding:10,50,10,10
 		row_force_default:True
-		row_default_height:58
+		row_default_height:48
 		Label:
 			id:_lb_1
 			text: '状态'
@@ -66,7 +69,7 @@
 		spacing:10
 		padding:10,0,10,60
 		row_force_default:True
-		row_default_height:68
+		row_default_height:58
 
 		Label:
 			text:'面条长度'
@@ -82,25 +85,67 @@
 			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
 
 		TextInput:
-			id:_txt1
+			id:_time2
 			text: '55'
 			multiline:False
 			font_size: 40
-			padding:40,10,10,0
+			padding:40,5,5,0
 			on_text_validate:root.on_enter(self.text)
 		TextInput:
-			id:_txt2
+			id:_time5
 			text: '12'
 			multiline:False
 			font_size: 40
-			padding:40,10,10,0
+			padding:40,5,5,0
 			on_text_validate:root.on_enter(self.text)
 		TextInput:
 			id:_txt3
 			text: '5'
 			multiline:False
 			font_size: 40
-			padding:40,10,10,0
+			padding:40,5,5,0
+			on_text_validate:root.on_enter(self.text)
+
+	GridLayout:
+		cols: 3
+		spacing:10
+		padding:10,0,10,60
+		row_force_default:True
+		row_default_height:58
+
+		Label:
+			text:'提前进水'
+			font_size: 30
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+		Label:
+			text:'进水延迟'
+			font_size: 30
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+		Label:
+			text:'搅拌'
+			font_size: 40
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+
+		TextInput:
+			id:_time1
+			text: '1'
+			multiline:False
+			font_size: 40
+			padding:40,5,5,0
+			on_text_validate:root.on_enter(self.text)
+		TextInput:
+			id:_time3
+			text: '2'
+			multiline:False
+			font_size: 40
+			padding:40,5,5,0
+			on_text_validate:root.on_enter(self.text)
+		TextInput:
+			id:_time4
+			text: '10'
+			multiline:False
+			font_size: 40
+			padding:40,5,5,0
 			on_text_validate:root.on_enter(self.text)
 			
 	ToggleButton:

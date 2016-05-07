@@ -49,27 +49,40 @@ class MyscreenApp(BoxLayout):
         pass
 
     def on_enter(self,val):
-        print("enter : ",self , val)
+        #print("enter : ",self , val)
+        pass
 
     def sch_m1(self,dt):            
         print("sch_m1 done: ",datetime.datetime.now())
-        Clock.schedule_once(self.sch_m2,3)
+        Clock.schedule_once(self.sch_m2,int(self.time2.text)/10)
         pass
 
     def sch_m2(self,dt):
         print("sch_m2 done: ",datetime.datetime.now())
-        Clock.schedule_once(self.sch_m3,3)
+        Clock.schedule_once(self.sch_m3,int(self.time3.text))
         pass
 
     def sch_m3(self,dt):
         print("sch_m3 done: ",datetime.datetime.now())
-        print("Loop done")
+        Clock.schedule_once(self.sch_m4,int(self.time4.text)/2)
+        pass
+
+    def sch_m4(self,dt):
+        print("sch_m4 done: ",datetime.datetime.now())
+        Clock.schedule_once(self.sch_fin,int(self.time4.text)/2)
+        pass
+
+    def sch_fin(self,dt):
+        print("schfin done: ",datetime.datetime.now(),self.txt3.text)
         self.r_sta=False        
         self.btnb1.disabled=False
         self.btnb2.disabled=False
         self.btnb3.disabled=False
-        self.txt1.disabled=False
-        self.txt2.disabled=False
+        self.time1.disabled=False
+        self.time2.disabled=False
+        self.time3.disabled=False
+        self.time4.disabled=False
+        self.time5.disabled=False
         self.txt3.disabled=False
         count=int(self.txt3.text)
         count=count-1
@@ -81,11 +94,14 @@ class MyscreenApp(BoxLayout):
             self.btnb1.disabled=True
             self.btnb2.disabled=True
             self.btnb3.disabled=True
-            self.txt1.disabled=True
-            self.txt2.disabled=True
+            self.time1.disabled=True
+            self.time2.disabled=True
+            self.time3.disabled=True
+            self.time4.disabled=True
+            self.time5.disabled=True
             self.txt3.disabled=True
             print("start loop : ",datetime.datetime.now())
-            Clock.schedule_once(self.sch_m1,3)
+            Clock.schedule_once(self.sch_m1,int(self.time1.text))
                         
         if self.r_sta:
             self.lb1.bkcolor=[0,1,0,.5]
