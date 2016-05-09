@@ -15,41 +15,78 @@ from kivy.clock import Clock
 from kivy.graphics import Color,Ellipse
 import datetime as datetime
 import RPi.GPIO as GPIO
+from kivy.lang import Builder
+from kivy.uix.screenmanager import ScreenManager, Screen
+import os,random
 
 
-class MyscreenApp(BoxLayout):
+Builder.load_file('test.kv')
+
+class SettingsScreen(Screen):
+    caifiles=[]
+    froot='/home/pi/lmf/image'
+    PIlen=0
+    PIno=0
+    def getfile(self):        
+        for i in os.listdir(self.froot):
+                if os.path.isfile(os.path.join(self.froot,i)):
+                        self.caifiles.append(i)
+        self.caifiles.sort()
+        self.PIlen=len(self.caifiles)
+        pass
+
+    def chpic(self,dt):
+        #i=random.randint(0,len(self.caifiles))
+        #i=random.randint(0,35)
+        f=os.path.join(self.froot,self.caifiles[self.PIno])		
+        self.PIno+=1
+        if(self.PIno>=self.PIlen):
+            self.PIno=0
+        print (f,myscr.watch_dog)
+        self.img.source=f        
+        pass
+
+    def backbtn(self):
+        #print("textd")
+        sm.current='menu'
+        Clock.unschedule(sescr.chpic)
+        pass
+
+
+class MyscreenApp(Screen):
     r_sta=False
-    # This callback will be bound to the LED toggle and Beep button:
-    def press_callback(self,obj):
-        #print("Button pressed,")
-        if obj.state == "down" and self.r_sta==False:
-            #print ("button on",datetime.datetime.now())
-            obj.text='Running'
-            #GPIO.output(ledPin, GPIO.HIGH)
-            #self.start_loop()
+    watch_dog=1
+
+    def on_focus(self):
+        #print("textd")
+        sm.current_screen.watch_dog=1
+        pass
+
+    def press_tgb(self):
+        if self.tgbtn.state == "down" and self.r_sta==False:
+            self.tgbtn.text='运行中'
         else:
             print ("button off")
-            obj.text='Stopping'
-            obj.state = "normal"
+            self.tgbtn.text='已停止'
+            self.tgbtn.state = "normal"
             self.txt3.text='1'
-            #GPIO.output(ledPin, GPIO.LOW)
 
     def press_btn_b1(self,val):
-        #print("b1 : ",val.pos[0])
-        #print("enter : ",txt1.text)
+        print("b1 : ",val.pos[0])
+        self.watch_dog=1
+        #GPIO.output(ledPin, GPIO.LOW)
         pass
 
     def press_btn_b2(self,val):
-        #print("b2 : ",val.pos[0])
+        print("b2 : ",val.pos[0])
+        self.watch_dog=1
+        #GPIO.output(ledPin, GPIO.LOW)
         pass
 
     def press_btn_b3(self,val):
-        #print("b3 : ",val.pos[0])
-        #print("t: ",int(self.txt3.text))
-        pass
-
-    def on_enter(self,val):
-        #print("enter : ",self , val)
+        print("b3 : ",val.pos[0])
+        self.watch_dog=1
+        #GPIO.output(ledPin, GPIO.LOW)
         pass
 
     def sch_m1(self,dt):            
@@ -89,6 +126,11 @@ class MyscreenApp(BoxLayout):
         self.txt3.text=str(count) 
 
     def update_sta(self,dt):
+        self=sm.current_screen
+        
+        if self.name!='menu':
+            return 0
+        
         if self.tgbtn.state == "down" and int(self.txt3.text)>0 and self.r_sta==False:
             self.r_sta=True
             self.btnb1.disabled=True
@@ -104,6 +146,7 @@ class MyscreenApp(BoxLayout):
             Clock.schedule_once(self.sch_m1,int(self.time1.text))
                         
         if self.r_sta:
+            self.watch_dog=1    
             self.lb1.bkcolor=[0,1,0,.5]
         else:
             self.lb1.bkcolor=[1,0,0,.5]
@@ -125,21 +168,33 @@ class MyscreenApp(BoxLayout):
         try:
             if int(self.txt3.text)==0:
                 self.tgbtn.state='normal'
-                self.tgbtn.text='Stopping'
+                self.tgbtn.text='已停止'
         except:
             self.tgbtn.state='normal'
-            self.tgbtn.text='Stopping'
+            self.tgbtn.text='已停止'
             
-        #print("up_sta : ")
+        self.watch_dog+=1
+        if self.watch_dog>60:
+            self.watch_dog=1
+            #sescr.chpic()
+            Clock.schedule_interval(sescr.chpic,5)
+            sm.current='settings'
+            
         pass
 
 
+# Create the screen manager
+sm = ScreenManager()
+myscr=MyscreenApp(name='menu')
+sm.add_widget(myscr)
+sescr=SettingsScreen(name='settings')
+sm.add_widget(sescr)
+
 class TestApp(App):
-    def build(self):
-        myscr=MyscreenApp()
-        myscr.r_sta=False
+    def build(self):        
+        sescr.getfile()
         Clock.schedule_interval(myscr.update_sta,1/15)
-        return myscr
+        return sm
 
 if __name__ == '__main__':
     TestApp().run()
