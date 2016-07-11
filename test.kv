@@ -19,13 +19,13 @@
 	lb1:_lb_1.__self__
 	lb2:_lb_2.__self__
 	lb3:_lb_3.__self__
-	time2:_time2.__self__
-	time5:_time5.__self__
 	txt3:_txt3.__self__
+	tgbtn:tg_btn.__self__
 	time1:_time1.__self__
+	time2:_time2.__self__
 	time3:_time3.__self__
 	time4:_time4.__self__
-	tgbtn:tg_btn.__self__
+	time5:_time5.__self__
 	btnb1:_btn_b1.__self__
 	btnb2:_btn_b2.__self__
 	btnb3:_btn_b3.__self__
@@ -107,6 +107,7 @@
 				font_size: 40
 				padding:40,5,5,0
 				on_focus:root.on_focus()
+				on_text:root.on_text(self.text)
 			TextInput:
 				id:_time5
 				text: '12'
@@ -114,6 +115,7 @@
 				font_size: 40
 				padding:40,5,5,0
 				on_focus:root.on_focus()
+				on_text:root.on_text(self.text)
 			TextInput:
 				id:_txt3
 				text: '5'
@@ -121,6 +123,7 @@
 				font_size: 40
 				padding:40,5,5,0
 				on_focus:root.on_focus()
+				on_text:root.on_text(self.text)
 
 		GridLayout:
 			cols: 3
@@ -149,6 +152,7 @@
 				font_size: 40
 				padding:40,5,5,0
 				on_focus:root.on_focus()
+				on_text:root.on_text(self.text)
 			TextInput:
 				id:_time3
 				text: '2'
@@ -156,6 +160,7 @@
 				font_size: 40
 				padding:40,5,5,0
 				on_focus:root.on_focus()
+				on_text:root.on_text(self.text)
 			TextInput:
 				id:_time4
 				text: '10'
@@ -163,6 +168,7 @@
 				font_size: 40
 				padding:40,5,5,0
 				on_focus:root.on_focus()
+				on_text:root.on_text(self.text)
 				
 		ToggleButton:
 			id:tg_btn
@@ -185,6 +191,7 @@
 				color: .8,.9,0,1
 				font_size: 32
 				on_press:root.press_btn_b1(_btn_b1)
+				on_release:root.release_btn_b1(_btn_b1)
 			Button:
 				id:_btn_b2
 				text:'水泵'
@@ -195,6 +202,7 @@
 				color: .8,.9,0,1
 				font_size: 32
 				on_press:root.press_btn_b2(_btn_b2)
+				on_release:root.release_btn_b2(_btn_b2)
 			Button:
 				id:_btn_b3
 				text:'漏斗'
@@ -202,4 +210,5 @@
 				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
 				color: .8,.9,0,1
 				font_size: 32
-				on_release:root.press_btn_b3(_btn_b3)
+				on_press:root.press_btn_b3(_btn_b3)
+				on_release:root.release_btn_b3(_btn_b3)
