@@ -2,8 +2,8 @@
 <VKeyboard>:
 	height: 500
 
-<SettingsScreen>:
-	name:'settings'
+<SaveScreen>:
+	name:'scrsave'
 	img:img.__self__
 	FloatLayout:
 		Button:
@@ -15,16 +15,114 @@
 			size: root.size
 			nocache: True
 
+<SettingsScreen>:
+	time1:_time1.__self__
+	time3:_time3.__self__
+	time4:_time4.__self__
+	time6:_time6.__self__
+
+	name:'settings'
+	BoxLayout:
+		orientation:'vertical'
+		GridLayout:
+			cols: 3
+			spacing:10
+			padding:10,0,10,60
+			row_force_default:True
+			row_default_height:58
+
+			Label:
+				text:'提前进水'
+				font_size: 30
+				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			Label:
+				text:'进水延迟'
+				font_size: 30
+				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			Label:
+				text:'搅拌传送'
+				font_size: 30
+				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+
+			TextInput:
+				id:_time1
+				text: '1'
+				multiline:False
+				font_size: 40
+				padding:40,5,5,0
+				on_focus:root.on_focus()
+				on_text:root.on_text(self.text)
+			TextInput:
+				id:_time3
+				text: '2'
+				multiline:False
+				font_size: 40
+				padding:40,5,5,0
+				on_focus:root.on_focus()
+				on_text:root.on_text(self.text)
+			TextInput:
+				id:_time4
+				text: '10'
+				multiline:False
+				font_size: 40
+				padding:40,5,5,0
+				on_focus:root.on_focus()
+				on_text:root.on_text(self.text)
+
+				
+		GridLayout:
+			cols: 3
+			spacing:10
+			padding:10,0,10,60
+			row_force_default:True
+			row_default_height:58
+
+			Label:
+				text:'传送延时'
+				font_size: 30
+				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			Label:
+				text:''
+				font_size: 30
+				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			Label:
+				text:''
+				font_size: 30
+				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+
+			TextInput:
+				id:_time6
+				text: '3'
+				multiline:False
+				font_size: 40
+				padding:40,5,5,0
+				on_focus:root.on_focus()
+				on_text:root.on_text(self.text)
+			Label:
+				text:''
+				font_size: 30
+				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			Label:
+				text:''
+				font_size: 30
+				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+				
+		Button:
+			id:tg_btn
+			text: '返回控制界面'
+			color: 1,1,1,1
+			font_size: 40
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			on_press:root.press_save()
+
 <MyscreenApp>:
 	lb1:_lb_1.__self__
 	lb2:_lb_2.__self__
 	lb3:_lb_3.__self__
 	txt3:_txt3.__self__
+	setbtn:set_btn.__self__
 	tgbtn:tg_btn.__self__
-	time1:_time1.__self__
 	time2:_time2.__self__
-	time3:_time3.__self__
-	time4:_time4.__self__
 	time5:_time5.__self__
 	btnb1:_btn_b1.__self__
 	btnb2:_btn_b2.__self__
@@ -124,51 +222,6 @@
 				padding:40,5,5,0
 				on_focus:root.on_focus()
 				on_text:root.on_text(self.text)
-
-		GridLayout:
-			cols: 3
-			spacing:10
-			padding:10,0,10,60
-			row_force_default:True
-			row_default_height:58
-
-			Label:
-				text:'提前进水'
-				font_size: 30
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-			Label:
-				text:'进水延迟'
-				font_size: 30
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-			Label:
-				text:'搅拌'
-				font_size: 40
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-
-			TextInput:
-				id:_time1
-				text: '1'
-				multiline:False
-				font_size: 40
-				padding:40,5,5,0
-				on_focus:root.on_focus()
-				on_text:root.on_text(self.text)
-			TextInput:
-				id:_time3
-				text: '2'
-				multiline:False
-				font_size: 40
-				padding:40,5,5,0
-				on_focus:root.on_focus()
-				on_text:root.on_text(self.text)
-			TextInput:
-				id:_time4
-				text: '10'
-				multiline:False
-				font_size: 40
-				padding:40,5,5,0
-				on_focus:root.on_focus()
-				on_text:root.on_text(self.text)
 				
 		ToggleButton:
 			id:tg_btn
@@ -185,7 +238,7 @@
 			
 			Button:
 				id:_btn_b1
-				text:'滚筒'
+				text:'漏斗'
 				font_size: 40
 				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
 				color: .8,.9,0,1
@@ -205,10 +258,24 @@
 				on_release:root.release_btn_b2(_btn_b2)
 			Button:
 				id:_btn_b3
-				text:'漏斗'
+				text:'滚筒'
 				font_size: 40
 				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
 				color: .8,.9,0,1
 				font_size: 32
 				on_press:root.press_btn_b3(_btn_b3)
 				on_release:root.release_btn_b3(_btn_b3)
+
+				
+		GridLayout:
+			cols: 1
+			spacing:10
+			padding:0,20, 0, 0
+			
+			Button:
+				id:set_btn
+				text: '设置'
+				color: 1,1,1,1
+				font_size: 40
+				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+				on_press:root.press_set()
