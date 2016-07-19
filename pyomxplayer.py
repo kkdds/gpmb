@@ -6,14 +6,11 @@ from time import sleep
 
 class OMXPlayer(object):
 
-    _LAUNCH_CMD = '/usr/bin/omxplayer --win 0,0,800,480 %s'
+    _LAUNCH_CMD = '/usr/bin/omxplayer --no-osd --blank --loop --orientation 90 --win 0,0,800,480 %s'
     _PAUSE_CMD = 'p'
     _TOGGLE_SUB_CMD = 's'
     _QUIT_CMD = 'q'
     _IMG_FILE = 'q'
-
-    paused = False
-    subtitles_visible = True
 
     _VOF=1
 
@@ -52,11 +49,3 @@ class OMXPlayer(object):
         self._process.terminate(force=True)
         #self._process = pexpect.spawn('feh -F '+self._IMG_FILE)
 			
-    def toggle_pause(self):
-        if self._process.send(self._PAUSE_CMD):
-            self.paused = not self.paused
-
-    def toggle_subtitles(self):
-        if self._process.send(self._TOGGLE_SUB_CMD):
-            self.subtitles_visible = not self.subtitles_visible
-

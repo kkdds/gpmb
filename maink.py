@@ -19,9 +19,11 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 import os,random
 import configparser
-from pyomxplayer import OMXPlayer
 
-omx=object
+#from pyomxplayer import OMXPlayer
+#omx=object
+from feh import FEH
+myfeh=object
 
 kconfig=configparser.ConfigParser()
 kconfig.read('/home/pi/gpmb/'+"set.ini")
@@ -75,9 +77,9 @@ def save_set():
     pass
 
 class SaveScreen(Screen):
-    global watch_dog,omx
+    global watch_dog,omx,myfeh
     caifiles=[]
-    froot='/home/pi/lmf/image'
+    froot='/home/pi/gpmb/img'
     PIlen=0
     PIno=0
     def getfile(self):        
@@ -95,12 +97,13 @@ class SaveScreen(Screen):
         self.PIno+=1
         if(self.PIno>=self.PIlen):
             self.PIno=0
-        print (f,myscr.watch_dog)
+        #print (f,watch_dog)
         self.img.source=f        
         pass
 
     def backbtn(self):
-        omx.stop()
+        #omx.stop()
+        #myfeh.stop()
         sm.current='menu'
         #Clock.unschedule(sescr.chpic)
         pass
@@ -246,7 +249,7 @@ class MyscreenApp(Screen):
 
     def update_sta(self,dt):
         global watch_dog
-        global omx
+        global omx,myfeh
 
         self=sm.current_screen
         
@@ -303,11 +306,12 @@ class MyscreenApp(Screen):
              watch_dog+=1
         if watch_dog>120:
             watch_dog=1
-            #sescr.chpic()
-            #Clock.schedule_interval(sescr.chpic,5)
+            #sescr.chpic(dt)
+            Clock.schedule_interval(sescr.chpic,5)
             sm.current='scrsave'
-            print('play video')
-            omx = OMXPlayer('/home/pi/gpmb/video.mp4')
+            #print('play video')
+            #omx = OMXPlayer('/home/pi/gpmb/video.avi')
+            #myfeh = FEH('/home/pi/gpmb/img/')
             
         pass
 
@@ -330,7 +334,7 @@ myscr.time5.text=s5
 
 class TestApp(App):
     def build(self):        
-        #sescr.getfile()
+        sescr.getfile()
         Clock.schedule_interval(myscr.update_sta,1/15)
         return sm
 
