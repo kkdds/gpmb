@@ -113,5 +113,8 @@ man feh
 
 -D Slide delay in seconds
 
-
+旋转屏幕
 /home/pi/.kivy/config.ini line 24 ratation=>90
+
+vkeyboard 行662 改字体
+/usr/local/lib/python3.4/dist-packages/kivy/uix
