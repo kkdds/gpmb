@@ -36,14 +36,14 @@ s6=kconfig.get("gpmb","s6")
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
-io_jx1=16
-io_jx2=20
-io_jx3=21
-io_jx4=26
-io_jx5=19
-io_jx6=13
-io_jx7=6
-io_jx8=5
+io_jx1=5
+io_jx2=6
+io_jx3=13
+io_jx4=19
+io_jx5=26
+io_jx6=21
+io_jx7=20
+io_jx8=16
 GPIO.setup(io_jx1, GPIO.OUT)
 GPIO.setup(io_jx2, GPIO.OUT)
 GPIO.setup(io_jx3, GPIO.OUT)
@@ -142,13 +142,13 @@ class MyscreenApp(Screen):
 
     def press_btn_b1(self,val):
         global watch_dog
-        print("b1 1: ",val.pos[0])
+        #print("b1 1: ",val.pos[0])
         watch_dog=1
         GPIO.output(io_jx1, GPIO.LOW)
         pass
     def release_btn_b1(self,val):
         global watch_dog
-        print("b1 0: ",val.pos[0])
+        #print("b1 0: ",val.pos[0])
         watch_dog=1
         GPIO.output(io_jx1, GPIO.HIGH)
         pass
@@ -156,27 +156,27 @@ class MyscreenApp(Screen):
     def press_btn_b2(self,val):
         global watch_dog
         watch_dog=1
-        print("b2 1: ",val.pos[0])
+        #print("b2 1: ",val.pos[0])
         GPIO.output(io_jx3, GPIO.LOW)
         pass
     def release_btn_b2(self,val):
         global watch_dog
         watch_dog=1
-        print("b2 0: ",val.pos[0])
+        #print("b2 0: ",val.pos[0])
         GPIO.output(io_jx3, GPIO.HIGH)
         pass
 
     def press_btn_b3(self,val):
         global watch_dog
         watch_dog=1
-        print("b3 1: ",val.pos[0])
+        #print("b3 1: ",val.pos[0])
         GPIO.output(io_jx4, GPIO.LOW)
         GPIO.output(io_jx5, GPIO.LOW)
         pass
     def release_btn_b3(self,val):
         global watch_dog
         watch_dog=1
-        print("b3 0: ",val.pos[0])
+        #print("b3 0: ",val.pos[0])
         GPIO.output(io_jx4, GPIO.HIGH)
         GPIO.output(io_jx5, GPIO.HIGH)
         pass

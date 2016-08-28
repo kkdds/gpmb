@@ -114,3 +114,4 @@ man feh
 -D Slide delay in seconds
 
 
+/home/pi/.kivy/config.ini line 24 ratation=>90
