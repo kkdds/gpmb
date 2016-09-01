@@ -36,14 +36,14 @@ s6=kconfig.get("gpmb","s6")
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
-io_jx1=5
-io_jx2=6
-io_jx3=13
-io_jx4=19
-io_jx5=26
-io_jx6=21
-io_jx7=20
-io_jx8=16
+io_jx1=21#
+io_jx2=20#
+io_jx3=16#
+io_jx4=19#
+io_jx5=26#
+io_jx6=13#
+io_jx7=6
+io_jx8=5
 GPIO.setup(io_jx1, GPIO.OUT)
 GPIO.setup(io_jx2, GPIO.OUT)
 GPIO.setup(io_jx3, GPIO.OUT)
@@ -143,7 +143,7 @@ class MyscreenApp(Screen):
     def press_btn_b1(self,val):
         global watch_dog
         #print("b1 1: ",val.pos[0])
-        watch_dog=1
+        watch_dog=0
         GPIO.output(io_jx1, GPIO.LOW)
         pass
     def release_btn_b1(self,val):
@@ -155,30 +155,30 @@ class MyscreenApp(Screen):
 
     def press_btn_b2(self,val):
         global watch_dog
-        watch_dog=1
-        #print("b2 1: ",val.pos[0])
-        GPIO.output(io_jx3, GPIO.LOW)
-        pass
-    def release_btn_b2(self,val):
-        global watch_dog
-        watch_dog=1
-        #print("b2 0: ",val.pos[0])
-        GPIO.output(io_jx3, GPIO.HIGH)
-        pass
-
-    def press_btn_b3(self,val):
-        global watch_dog
-        watch_dog=1
+        watch_dog=0
         #print("b3 1: ",val.pos[0])
         GPIO.output(io_jx4, GPIO.LOW)
         GPIO.output(io_jx5, GPIO.LOW)
         pass
-    def release_btn_b3(self,val):
+    def release_btn_b2(self,val):
         global watch_dog
         watch_dog=1
         #print("b3 0: ",val.pos[0])
         GPIO.output(io_jx4, GPIO.HIGH)
         GPIO.output(io_jx5, GPIO.HIGH)
+        pass
+
+    def press_btn_b3(self,val):
+        global watch_dog
+        watch_dog=0
+        #print("b2 1: ",val.pos[0])
+        GPIO.output(io_jx3, GPIO.LOW)
+        pass
+    def release_btn_b3(self,val):
+        global watch_dog
+        watch_dog=1
+        #print("b2 0: ",val.pos[0])
+        GPIO.output(io_jx3, GPIO.HIGH)
         pass
 
     def press_set(self):
@@ -222,6 +222,8 @@ class MyscreenApp(Screen):
         print("sch_m5 done: ",datetime.datetime.now())
         GPIO.output(io_jx2, GPIO.HIGH)
         GPIO.output(io_jx4, GPIO.HIGH)
+        GPIO.output(io_jx5, GPIO.HIGH)
+        GPIO.output(io_jx6, GPIO.LOW)
         Clock.schedule_once(self.sch_fin,int(setscr.time6.text)/2)
         pass
 
@@ -246,6 +248,7 @@ class MyscreenApp(Screen):
         GPIO.output(io_jx3, GPIO.HIGH)
         GPIO.output(io_jx4, GPIO.HIGH)
         GPIO.output(io_jx5, GPIO.HIGH)
+        GPIO.output(io_jx6, GPIO.HIGH)
 
     def update_sta(self,dt):
         global watch_dog
@@ -304,7 +307,7 @@ class MyscreenApp(Screen):
             
         if watch_dog>0:
              watch_dog+=1
-        if watch_dog>120:
+        if watch_dog>1200:
             watch_dog=1
             #sescr.chpic(dt)
             Clock.schedule_interval(sescr.chpic,5)
