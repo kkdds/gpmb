@@ -38,9 +38,9 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
 io_jx1=21#
 io_jx2=20#
-io_jx3=16#
+io_jx3=26#
 io_jx4=19#
-io_jx5=26#
+io_jx5=16#
 io_jx6=13#
 io_jx7=6
 io_jx8=5
@@ -158,27 +158,27 @@ class MyscreenApp(Screen):
         watch_dog=0
         #print("b3 1: ",val.pos[0])
         GPIO.output(io_jx4, GPIO.LOW)
-        GPIO.output(io_jx5, GPIO.LOW)
+        GPIO.output(io_jx3, GPIO.LOW)
         pass
     def release_btn_b2(self,val):
         global watch_dog
         watch_dog=1
         #print("b3 0: ",val.pos[0])
         GPIO.output(io_jx4, GPIO.HIGH)
-        GPIO.output(io_jx5, GPIO.HIGH)
+        GPIO.output(io_jx3, GPIO.HIGH)
         pass
 
     def press_btn_b3(self,val):
         global watch_dog
         watch_dog=0
         #print("b2 1: ",val.pos[0])
-        GPIO.output(io_jx3, GPIO.LOW)
+        GPIO.output(io_jx5, GPIO.LOW)
         pass
     def release_btn_b3(self,val):
         global watch_dog
         watch_dog=1
         #print("b2 0: ",val.pos[0])
-        GPIO.output(io_jx3, GPIO.HIGH)
+        GPIO.output(io_jx5, GPIO.HIGH)
         pass
 
     def press_set(self):
@@ -202,20 +202,21 @@ class MyscreenApp(Screen):
     def sch_m2(self,dt):
         print("sch_m2 done: ",datetime.datetime.now())
         GPIO.output(io_jx1, GPIO.HIGH)
-        Clock.schedule_once(self.sch_m3,int(setscr.time3.text)/5)
+        Clock.schedule_once(self.sch_m3,int(setscr.time3.text)/10)
         pass
 
     def sch_m3(self,dt):
         print("sch_m3 done: ",datetime.datetime.now())
         GPIO.output(io_jx3, GPIO.HIGH)
-        Clock.schedule_once(self.sch_m4,int(setscr.time4.text)/2)
+        Clock.schedule_once(self.sch_m4,int(setscr.time4.text))
         pass
 
     def sch_m4(self,dt):
         print("sch_m4 done: ",datetime.datetime.now())
         GPIO.output(io_jx4, GPIO.LOW)
         GPIO.output(io_jx5, GPIO.LOW)
-        Clock.schedule_once(self.sch_m5,int(self.time5.text)/2)
+        GPIO.output(io_jx6, GPIO.LOW)
+        Clock.schedule_once(self.sch_m5,int(self.time5.text)/10)
         pass
 
     def sch_m5(self,dt):
@@ -223,8 +224,7 @@ class MyscreenApp(Screen):
         GPIO.output(io_jx2, GPIO.HIGH)
         GPIO.output(io_jx4, GPIO.HIGH)
         GPIO.output(io_jx5, GPIO.HIGH)
-        GPIO.output(io_jx6, GPIO.LOW)
-        Clock.schedule_once(self.sch_fin,int(setscr.time6.text)/2)
+        Clock.schedule_once(self.sch_fin,int(setscr.time6.text))
         pass
 
     def sch_fin(self,dt):
@@ -274,8 +274,8 @@ class MyscreenApp(Screen):
             print("start loop : ",datetime.datetime.now())
             GPIO.output(io_jx1, GPIO.LOW)
             GPIO.output(io_jx2, GPIO.LOW)
-            Clock.schedule_once(self.sch_m1,int(setscr.time1.text)/5)
-            Clock.schedule_once(self.sch_m2,int(self.time2.text))
+            Clock.schedule_once(self.sch_m1,int(setscr.time1.text)/10)
+            Clock.schedule_once(self.sch_m2,int(self.time2.text)/10)
                         
         if self.r_sta:
             watch_dog=1    
