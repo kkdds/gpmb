@@ -61,6 +61,11 @@ GPIO.output(io_jx6, 1)
 GPIO.output(io_jx7, 1)
 GPIO.output(io_jx8, 1)
 
+io_in1=23
+io_in2=24
+GPIO.setup(io_in1,GPIO.IN,pull_up_down=GPIO.PUD_UP)
+GPIO.setup(io_in2,GPIO.IN,pull_up_down=GPIO.PUD_UP)
+
 watch_dog=1
 
 Builder.load_file('gpv1.kv')
@@ -197,6 +202,7 @@ class MyscreenApp(Screen):
     def sch_m1(self,dt):            
         print("sch_m1 done: ",datetime.datetime.now())
         GPIO.output(io_jx3, GPIO.LOW)
+        GPIO.output(io_jx4, GPIO.LOW)
         pass
 
     def sch_m2(self,dt):
@@ -208,21 +214,19 @@ class MyscreenApp(Screen):
     def sch_m3(self,dt):
         print("sch_m3 done: ",datetime.datetime.now())
         GPIO.output(io_jx3, GPIO.HIGH)
+        GPIO.output(io_jx4, GPIO.HIGH)
         Clock.schedule_once(self.sch_m4,int(setscr.time4.text))
         pass
 
     def sch_m4(self,dt):
         print("sch_m4 done: ",datetime.datetime.now())
-        GPIO.output(io_jx4, GPIO.LOW)
         GPIO.output(io_jx5, GPIO.LOW)
-        GPIO.output(io_jx6, GPIO.LOW)
         Clock.schedule_once(self.sch_m5,int(self.time5.text)/10)
         pass
 
     def sch_m5(self,dt):
         print("sch_m5 done: ",datetime.datetime.now())
         GPIO.output(io_jx2, GPIO.HIGH)
-        GPIO.output(io_jx4, GPIO.HIGH)
         GPIO.output(io_jx5, GPIO.HIGH)
         Clock.schedule_once(self.sch_fin,int(setscr.time6.text))
         pass
@@ -260,6 +264,14 @@ class MyscreenApp(Screen):
             return 0
         
         if self.tgbtn.state == "down" and int(self.txt3.text)>0 and self.r_sta==False:
+            if GPIO.input(23)==GPIO.HIGH:
+                self.tgbtn.state='normal'
+                self.tgbtn.text='已停止'
+                return 0
+            if GPIO.input(24)==GPIO.HIGH:
+                self.tgbtn.state='normal'
+                self.tgbtn.text='已停止'
+                return 0
             self.r_sta=True
             self.btnb1.disabled=True
             self.btnb2.disabled=True
@@ -274,6 +286,7 @@ class MyscreenApp(Screen):
             print("start loop : ",datetime.datetime.now())
             GPIO.output(io_jx1, GPIO.LOW)
             GPIO.output(io_jx2, GPIO.LOW)
+            GPIO.output(io_jx6, GPIO.LOW)
             Clock.schedule_once(self.sch_m1,int(setscr.time1.text)/10)
             Clock.schedule_once(self.sch_m2,int(self.time2.text)/10)
                         
@@ -283,19 +296,25 @@ class MyscreenApp(Screen):
         else:
             self.lb1.bkcolor=[1,0,0,.5]
             
-        if 0:
-            self.lb2.text='准备'
-            self.lb2.bkcolor=[1,0,0,.5]
-            self.tgbtn.disabled=True
-        else:
+        if GPIO.input(23)==GPIO.LOW:
             self.lb2.text='就绪'
             self.lb2.bkcolor=[0,1,0,.5]
             self.tgbtn.disabled=False
+            self.btnb1.disabled=True
+        else:
+            self.lb2.text='准备'
+            self.lb2.bkcolor=[1,0,0,.5]
+            self.tgbtn.disabled=True
+            self.btnb1.disabled=False
             
-        if 1:
+        if GPIO.input(24)==GPIO.LOW:
             self.lb3.bkcolor=[0,1,0,.5]
+            self.tgbtn.disabled |= 0
+            self.btnb2.disabled=True
         else:
             self.lb3.bkcolor=[1,0,0,.5]
+            self.tgbtn.disabled=True
+            self.btnb2.disabled=False
 
         try:
             if int(self.txt3.text)==0:
@@ -315,7 +334,6 @@ class MyscreenApp(Screen):
             #print('play video')
             #omx = OMXPlayer('/home/pi/gpmb/video.avi')
             #myfeh = FEH('/home/pi/gpmb/img/')
-            
         pass
 
 
