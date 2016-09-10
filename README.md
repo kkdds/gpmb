@@ -110,8 +110,40 @@ man feh
 
 -D Slide delay in seconds
 
+vkeyboard 行662 改字体
+/usr/local/lib/python3.4/dist-packages/kivy/uix/vkeyboard.py
+
+config.ini
+keyboard_mode = dock
+
+
 旋转屏幕
 /home/pi/.kivy/config.ini line 24 ratation=>90
 
-vkeyboard 行662 改字体
-/usr/local/lib/python3.4/dist-packages/kivy/uix
+sudo leafpad /boot/config.txt
+display_rotate=0 Normal
+display_rotate=1 90 degrees
+display_rotate=2 180 degrees
+display_rotate=3 270 degrees
+
+$ sudo apt-get install xinput
+
+xinput --list
+(if you're on the Rasp Pi via SSH)
+    DISPLAY=:0 xinput --list
+
+
+/HOME/PI下面创建文件 rot.sh ，内容为
+
+#!/bin/bash
+xinput set-prop 'FT5406 memory based driver' 'Evdev Axes Swap' 1
+xinput --set-prop 'FT5406 memory based driver' 'Evdev Axis Inversion' 0 1
+
+
+赋予rot.sh执行权限！！！
+sudo chmod 755 /home/pi/rot.sh
+
+
+sudo leafpad /home/pi/.config/lxsession/LXDE-pi/autostart
+加入一行
+@/home/pi/rot.sh

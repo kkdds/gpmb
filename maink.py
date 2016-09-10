@@ -1,12 +1,13 @@
 #! /usr/bin/python3.4
 # -*- coding: utf-8 -*-
 import kivy
-kivy.require('1.0.6') # replace with your current kivy version !
+kivy.require('1.7.6') # replace with your current kivy version !
 
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.togglebutton import ToggleButton
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.image import Image
 from kivy.uix.label import Label
@@ -98,8 +99,7 @@ class SaveScreen(Screen):
 
     def chpic(self,dt):
         #i=random.randint(0,len(self.caifiles))
-        #i=random.randint(0,35)
-        f=os.path.join(self.froot,self.caifiles[self.PIno])		
+        f=os.path.join(self.froot,self.caifiles[self.PIno])
         self.PIno+=1
         if(self.PIno>=self.PIlen):
             self.PIno=0
@@ -135,7 +135,6 @@ class MyscreenApp(Screen):
     def on_focus(self):
         global watch_dog
         print("on_focus")
-        #sm.current_screen.watch_dog=1
         watch_dog=0
         pass
 
@@ -148,15 +147,17 @@ class MyscreenApp(Screen):
 
     def press_btn_b1(self,val):
         global watch_dog
-        #print("b1 1: ",val.pos[0])
+        #print("b1 1: ")
         watch_dog=0
         GPIO.output(io_jx1, GPIO.LOW)
+        Clock.schedule_once(self.release_btn_b1,5)
         pass
     def release_btn_b1(self,val):
         global watch_dog
-        #print("b1 0: ",val.pos[0])
+        #print("b1 0: ")
         watch_dog=1
-        GPIO.output(io_jx1, GPIO.HIGH)
+        GPIO.output(io_jx1, GPIO.HIGH)        
+        self.btnb1.state = "normal"
         pass
 
     def press_btn_b2(self,val):
@@ -165,13 +166,15 @@ class MyscreenApp(Screen):
         #print("b3 1: ",val.pos[0])
         GPIO.output(io_jx4, GPIO.LOW)
         GPIO.output(io_jx3, GPIO.LOW)
+        Clock.schedule_once(self.release_btn_b2,5)
         pass
     def release_btn_b2(self,val):
         global watch_dog
         watch_dog=1
         #print("b3 0: ",val.pos[0])
         GPIO.output(io_jx4, GPIO.HIGH)
-        GPIO.output(io_jx3, GPIO.HIGH)
+        GPIO.output(io_jx3, GPIO.HIGH)        
+        self.btnb2.state = "normal"
         pass
 
     def press_btn_b3(self,val):
@@ -187,6 +190,15 @@ class MyscreenApp(Screen):
         GPIO.output(io_jx5, GPIO.HIGH)
         pass
 
+    def press_am(self,txtn,val):
+        if txtn=="time2":
+            self.time2.text=str(int(self.time2.text)+val)
+        elif txtn=="time5":
+            self.time5.text=str(int(self.time5.text)+val)
+        elif txtn=="txt3":
+            self.txt3.text=str(int(self.txt3.text)+val)
+        pass
+        
     def press_set(self):
         sm.current='settings'
         pass
@@ -327,7 +339,7 @@ class MyscreenApp(Screen):
             
         if watch_dog>0:
              watch_dog+=1
-        if watch_dog>1200:
+        if watch_dog>3200:
             watch_dog=1
             #sescr.chpic(dt)
             Clock.schedule_interval(sescr.chpic,5)
