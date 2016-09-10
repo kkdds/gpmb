@@ -265,11 +265,11 @@ class MyscreenApp(Screen):
             return 0
         
         if self.tgbtn.state == "down" and int(self.txt3.text)>0 and self.r_sta==False:
-            if GPIO.input(23)==GPIO.HIGH:
+            if GPIO.input(23)==GPIO.LOW:
                 self.tgbtn.state='normal'
                 self.tgbtn.text='已停止'
                 return 0
-            if GPIO.input(24)==GPIO.HIGH:
+            if GPIO.input(24)==GPIO.LOW:
                 self.tgbtn.state='normal'
                 self.tgbtn.text='已停止'
                 return 0
