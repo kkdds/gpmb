@@ -1,3 +1,5 @@
+#! /usr/bin/python3.4
+# -*- coding: utf-8 -*-
 import kivy
 kivy.require('1.0.6') # replace with your current kivy version !
 
@@ -8,7 +10,6 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.image import Image
 from kivy.uix.label import Label
-# textinput need install xclip
 from kivy.uix.textinput import TextInput
 from kivy.uix.vkeyboard import VKeyboard
 from kivy.clock import Clock
@@ -296,7 +297,7 @@ class MyscreenApp(Screen):
         else:
             self.lb1.bkcolor=[1,0,0,.5]
             
-        if GPIO.input(23)==GPIO.LOW:
+        if GPIO.input(23)==GPIO.HIGH:
             self.lb2.text='就绪'
             self.lb2.bkcolor=[0,1,0,.5]
             self.tgbtn.disabled=False
@@ -307,7 +308,7 @@ class MyscreenApp(Screen):
             self.tgbtn.disabled=True
             self.btnb1.disabled=False
             
-        if GPIO.input(24)==GPIO.LOW:
+        if GPIO.input(24)==GPIO.HIGH:
             self.lb3.bkcolor=[0,1,0,.5]
             self.tgbtn.disabled |= 0
             self.btnb2.disabled=True
