@@ -339,7 +339,7 @@ class MyscreenApp(Screen):
             
         if watch_dog>0:
              watch_dog+=1
-        if watch_dog>90:
+        if watch_dog>450:
             watch_dog=1
             #sescr.chpic(dt)
             Clock.schedule_interval(sescr.chpic,5)
