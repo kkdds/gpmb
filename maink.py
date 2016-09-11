@@ -38,12 +38,12 @@ s6=kconfig.get("gpmb","s6")
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
-io_jx1=21#
-io_jx2=20#
-io_jx3=26#
-io_jx4=19#
-io_jx5=16#
-io_jx6=13#
+io_jx1=26#
+io_jx2=16#
+io_jx3=19#
+io_jx4=13#
+io_jx5=20#
+io_jx6=21#
 io_jx7=6
 io_jx8=5
 GPIO.setup(io_jx1, GPIO.OUT)
@@ -216,6 +216,7 @@ class MyscreenApp(Screen):
         print("sch_m1 done: ",datetime.datetime.now())
         GPIO.output(io_jx3, GPIO.LOW)
         GPIO.output(io_jx4, GPIO.LOW)
+        Clock.schedule_once(self.sch_m2,int(self.time2.text)/10)
         pass
 
     def sch_m2(self,dt):
@@ -301,7 +302,6 @@ class MyscreenApp(Screen):
             GPIO.output(io_jx2, GPIO.LOW)
             GPIO.output(io_jx6, GPIO.LOW)
             Clock.schedule_once(self.sch_m1,int(setscr.time1.text)/10)
-            Clock.schedule_once(self.sch_m2,int(self.time2.text)/10)
                         
         if self.r_sta:
             watch_dog=1    
