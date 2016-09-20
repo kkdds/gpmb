@@ -65,8 +65,12 @@ GPIO.output(io_jx8, 1)
 
 io_in1=23
 io_in2=24
+io_in3=17
+io_in4=27
 GPIO.setup(io_in1,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 GPIO.setup(io_in2,GPIO.IN,pull_up_down=GPIO.PUD_UP)
+GPIO.setup(io_in3,GPIO.IN,pull_up_down=GPIO.PUD_UP)
+GPIO.setup(io_in4,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 
 watch_dog=1
 
@@ -328,6 +332,20 @@ class MyscreenApp(Screen):
             self.lb3.bkcolor=[1,0,0,.5]
             self.tgbtn.disabled=True
             self.btnb2.disabled=False
+            
+        #manual +1 and start
+        if GPIO.input(17)==GPIO.LOW:
+            self.txt3.text=str(int(self.txt3.text)+1)
+            if self.r_sta==False:
+                self.tgbtn.text='运行中'
+                self.tgbtn.state == "down"
+
+        #manual stop
+        if GPIO.input(27)==GPIO.LOW:
+            print ("man btn off")
+            self.tgbtn.text='已停止'
+            self.tgbtn.state = "normal"
+            self.txt3.text='1'
 
         try:
             if int(self.txt3.text)==0:
