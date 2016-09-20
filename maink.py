@@ -93,6 +93,7 @@ class SaveScreen(Screen):
     froot='/home/pi/gpmb/img'
     PIlen=0
     PIno=0
+    key_delay=0
     def getfile(self):        
         for i in os.listdir(self.froot):
                 if os.path.isfile(os.path.join(self.froot,i)):
@@ -335,10 +336,16 @@ class MyscreenApp(Screen):
             
         #manual +1 and start
         if GPIO.input(17)==GPIO.LOW:
-            self.txt3.text=str(int(self.txt3.text)+1)
+            if self.key_delay==0:
+                self.txt3.text=str(int(self.txt3.text)+1)
+            self.key_delay+=1
+            if self.key_delay==15:
+                self.key_delay=0
             if self.r_sta==False:
                 self.tgbtn.text='运行中'
-                self.tgbtn.state == "down"
+                self.tgbtn.state = "down"
+        else:
+             self.key_delay=0
 
         #manual stop
         if GPIO.input(27)==GPIO.LOW:
