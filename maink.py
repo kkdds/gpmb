@@ -118,7 +118,11 @@ class SaveScreen(Screen):
         sm.current='menu'
         #Clock.unschedule(sescr.chpic)
         pass
-
+        
+    def update_sta(self,dt):
+        if GPIO.input(17)==GPIO.LOW:
+            sm.current='menu'
+            
 
 class SettingsScreen(Screen):    
 
@@ -395,6 +399,7 @@ class TestApp(App):
     def build(self):        
         sescr.getfile()
         Clock.schedule_interval(myscr.update_sta,1/15)
+        Clock.schedule_interval(sescr.update_sta,1/15)
         return sm
 
 if __name__ == '__main__':
