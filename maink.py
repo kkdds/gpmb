@@ -268,7 +268,8 @@ class MyscreenApp(Screen):
         self.txt3.disabled=False
         self.setbtn.disabled=False
         count=int(self.txt3.text)
-        count=count-1
+        if count>0:
+            count=count-1
         self.txt3.text=str(count)
         GPIO.output(io_jx1, GPIO.HIGH)
         GPIO.output(io_jx2, GPIO.HIGH)
@@ -285,7 +286,7 @@ class MyscreenApp(Screen):
         
         if self.name!='menu':
             return 0
-        
+
         if self.tgbtn.state == "down" and int(self.txt3.text)>0 and self.r_sta==False:
             if GPIO.input(23)==GPIO.HIGH:
                 self.tgbtn.state='normal'
@@ -311,7 +312,7 @@ class MyscreenApp(Screen):
             GPIO.output(io_jx2, GPIO.LOW)
             GPIO.output(io_jx6, GPIO.LOW)
             Clock.schedule_once(self.sch_m1,int(setscr.time1.text)/10)
-                        
+
         if self.r_sta:
             watch_dog=1    
             self.lb1.bkcolor=[0,1,0,.5]
@@ -337,7 +338,7 @@ class MyscreenApp(Screen):
             self.lb3.bkcolor=[1,0,0,.5]
             self.tgbtn.disabled=True
             self.btnb2.disabled=False
-            
+
         #manual +1 and start
         if GPIO.input(17)==GPIO.LOW:
             if self.key_delay==0:
@@ -356,7 +357,7 @@ class MyscreenApp(Screen):
             print ("man btn off")
             self.tgbtn.text='已停止'
             self.tgbtn.state = "normal"
-            self.txt3.text='1'
+            self.txt3.text='0'
 
         try:
             if int(self.txt3.text)==0:
@@ -365,7 +366,7 @@ class MyscreenApp(Screen):
         except:
             self.tgbtn.state='normal'
             self.tgbtn.text='已停止'
-            
+
         if watch_dog>0:
              watch_dog+=1
         if watch_dog>450:
