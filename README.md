@@ -13,7 +13,7 @@ deb-src http://mirrors.aliyun.com/raspbian/raspbian/ jessie main non-free contri
 sudo apt-get update
 sudo apt-get upgrade -y
 
-sudo apt-get install xrdp xclip feh ttf-wqy-zenhei ttf-wqy-microhei python-rpi.gpio python3-rpi.gpio samba-common-bin samba
+sudo apt-get install -y python3-smbus i2c-tools xrdp xclip feh ttf-wqy-zenhei ttf-wqy-microhei python-rpi.gpio python3-rpi.gpio samba-common-bin samba
 sudo pip3 install pexpect aiohttp aiohttp_jinja2 configparser
 
 
