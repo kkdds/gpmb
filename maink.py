@@ -22,6 +22,8 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 import os,random
 import configparser
 
+from TM1650 import TM1650
+myTM1650=object
 #from pyomxplayer import OMXPlayer
 #omx=object
 from feh import FEH
@@ -69,8 +71,9 @@ io_in3=17
 io_in4=27
 GPIO.setup(io_in1,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 GPIO.setup(io_in2,GPIO.IN,pull_up_down=GPIO.PUD_UP)
-GPIO.setup(io_in3,GPIO.IN,pull_up_down=GPIO.PUD_UP)
-GPIO.setup(io_in4,GPIO.IN,pull_up_down=GPIO.PUD_UP)
+GPIO.setup(17,GPIO.IN,pull_up_down=GPIO.PUD_UP)
+GPIO.setup(27,GPIO.IN,pull_up_down=GPIO.PUD_UP)
+GPIO.setup(22,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 
 watch_dog=1
 
@@ -147,11 +150,18 @@ class MyscreenApp(Screen):
         watch_dog=0
         pass
 
+    def on_text2(self, value):
+        global watch_dog
+        print("on_text 2")
+        watch_dog=1    
+        pass
+        
     def on_text(self, value):
         global watch_dog
         print("on_text")
         watch_dog=1
-        save_set()
+        if self.r_sta==False:
+            save_set()        
         pass
 
     def press_btn_b1(self,val):
@@ -255,6 +265,7 @@ class MyscreenApp(Screen):
         pass
 
     def sch_fin(self,dt):
+        global myTM1650
         print("schfin done: ",datetime.datetime.now(),self.txt3.text)
         self.r_sta=False        
         self.btnb1.disabled=False
@@ -271,6 +282,8 @@ class MyscreenApp(Screen):
         if count>0:
             count=count-1
         self.txt3.text=str(count)
+        myTM1650.R(self.txt3.text)
+        myTM1650.L('  ')
         GPIO.output(io_jx1, GPIO.HIGH)
         GPIO.output(io_jx2, GPIO.HIGH)
         GPIO.output(io_jx3, GPIO.HIGH)
@@ -280,7 +293,7 @@ class MyscreenApp(Screen):
 
     def update_sta(self,dt):
         global watch_dog
-        global omx,myfeh
+        global omx,myfeh,myTM1650
 
         self=sm.current_screen
         
@@ -311,6 +324,8 @@ class MyscreenApp(Screen):
             GPIO.output(io_jx1, GPIO.LOW)
             GPIO.output(io_jx2, GPIO.LOW)
             GPIO.output(io_jx6, GPIO.LOW)
+            myTM1650.L('--')
+            myTM1650.R(self.txt3.text)
             Clock.schedule_once(self.sch_m1,int(setscr.time1.text)/10)
 
         if self.r_sta:
@@ -339,25 +354,45 @@ class MyscreenApp(Screen):
             self.tgbtn.disabled=True
             self.btnb2.disabled=False
 
-        #manual +1 and start
-        if GPIO.input(17)==GPIO.LOW:
+        #manual +10 and start
+        if GPIO.input(22)==GPIO.LOW:
             if self.key_delay==0:
-                self.txt3.text=str(int(self.txt3.text)+1)
+                self.txt3.text=str(int(self.txt3.text)+10)
+                myTM1650.R(self.txt3.text)
+                myTM1650.L('--')
             self.key_delay+=1
             if self.key_delay==15:
                 self.key_delay=0
-            if self.r_sta==False:
-                self.tgbtn.text='运行中'
-                self.tgbtn.state = "down"
+            #if self.r_sta==False:
+            self.tgbtn.text='运行中'
+            self.tgbtn.state = "down"
+        else:
+             self.key_delay=0
+
+        #manual +1 and start
+        if GPIO.input(27)==GPIO.LOW:
+            if self.key_delay==0:
+                self.txt3.text=str(int(self.txt3.text)+1)
+                myTM1650.R(self.txt3.text)
+                myTM1650.L('--')
+            self.key_delay+=1
+            if self.key_delay==15:
+                self.key_delay=0
+            #if self.r_sta==False:
+            self.tgbtn.text='运行中'
+            self.tgbtn.state = "down"
         else:
              self.key_delay=0
 
         #manual stop
-        if GPIO.input(27)==GPIO.LOW:
+        if GPIO.input(17)==GPIO.LOW:
             print ("man btn off")
             self.tgbtn.text='已停止'
             self.tgbtn.state = "normal"
             self.txt3.text='0'
+            myTM1650.R('0')
+            if self.r_sta==True:
+                myTM1650.L('__')
 
         try:
             if int(self.txt3.text)==0:
@@ -395,6 +430,8 @@ setscr.time4.text=s4
 setscr.time6.text=s6
 myscr.time2.text=s2
 myscr.time5.text=s5
+
+myTM1650=TM1650()
 
 class TestApp(App):
     def build(self):        
