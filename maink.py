@@ -69,6 +69,7 @@ io_in1=23
 io_in2=24
 io_in3=17
 io_in4=27
+io_in4=22
 GPIO.setup(io_in1,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 GPIO.setup(io_in2,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 GPIO.setup(17,GPIO.IN,pull_up_down=GPIO.PUD_UP)
@@ -123,7 +124,7 @@ class SaveScreen(Screen):
         pass
         
     def update_sta(self,dt):
-        if GPIO.input(17)==GPIO.LOW:
+        if GPIO.input(22)==GPIO.LOW|GPIO.input(27)==GPIO.LOW:
             sm.current='menu'
             
 
