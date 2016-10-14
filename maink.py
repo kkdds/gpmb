@@ -97,7 +97,6 @@ class SaveScreen(Screen):
     froot='/home/pi/gpmb/img'
     PIlen=0
     PIno=0
-    key_delay=0
     def getfile(self):        
         for i in os.listdir(self.froot):
                 if os.path.isfile(os.path.join(self.froot,i)):
@@ -124,7 +123,7 @@ class SaveScreen(Screen):
         pass
         
     def update_sta(self,dt):
-        if GPIO.input(22)==GPIO.LOW|GPIO.input(27)==GPIO.LOW:
+        if GPIO.input(22)==GPIO.LOW or GPIO.input(27)==GPIO.LOW:
             sm.current='menu'
             
 
@@ -144,6 +143,8 @@ class SettingsScreen(Screen):
 class MyscreenApp(Screen):
     
     r_sta=False
+    key_delay=0
+    key_delay2=0
 
     def on_focus(self):
         global watch_dog
@@ -357,18 +358,18 @@ class MyscreenApp(Screen):
 
         #manual +10 and start
         if GPIO.input(22)==GPIO.LOW:
-            if self.key_delay==0:
+            if self.key_delay2==0:
                 self.txt3.text=str(int(self.txt3.text)+10)
                 myTM1650.R(self.txt3.text)
                 myTM1650.L('--')
-            self.key_delay+=1
-            if self.key_delay==15:
-                self.key_delay=0
             #if self.r_sta==False:
-            self.tgbtn.text='运行中'
-            self.tgbtn.state = "down"
+                self.tgbtn.text='运行中'
+                self.tgbtn.state = "down"
+            self.key_delay2+=1
+            if self.key_delay2==15:
+                self.key_delay2=0
         else:
-             self.key_delay=0
+             self.key_delay2=0
 
         #manual +1 and start
         if GPIO.input(27)==GPIO.LOW:
@@ -376,12 +377,12 @@ class MyscreenApp(Screen):
                 self.txt3.text=str(int(self.txt3.text)+1)
                 myTM1650.R(self.txt3.text)
                 myTM1650.L('--')
+            #if self.r_sta==False:
+                self.tgbtn.text='运行中'
+                self.tgbtn.state = "down"
             self.key_delay+=1
             if self.key_delay==15:
                 self.key_delay=0
-            #if self.r_sta==False:
-            self.tgbtn.text='运行中'
-            self.tgbtn.state = "down"
         else:
              self.key_delay=0
 
