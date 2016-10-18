@@ -75,6 +75,7 @@ GPIO.setup(io_in2,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 GPIO.setup(17,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 GPIO.setup(27,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 GPIO.setup(22,GPIO.IN,pull_up_down=GPIO.PUD_UP)
+GPIO.setup(4,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 
 watch_dog=1
 
@@ -97,7 +98,7 @@ class SaveScreen(Screen):
     froot='/home/pi/gpmb/img'
     PIlen=0
     PIno=0
-    def getfile(self):        
+    def getfile(self):
         for i in os.listdir(self.froot):
                 if os.path.isfile(os.path.join(self.froot,i)):
                         self.caifiles.append(i)
@@ -112,7 +113,7 @@ class SaveScreen(Screen):
         if(self.PIno>=self.PIlen):
             self.PIno=0
         #print (f,watch_dog)
-        self.img.source=f        
+        self.img.source=f
         pass
 
     def backbtn(self):
@@ -121,19 +122,19 @@ class SaveScreen(Screen):
         sm.current='menu'
         #Clock.unschedule(sescr.chpic)
         pass
-        
+
     def update_sta(self,dt):
         if GPIO.input(22)==GPIO.LOW or GPIO.input(27)==GPIO.LOW:
             sm.current='menu'
-            
 
-class SettingsScreen(Screen):    
+
+class SettingsScreen(Screen):
 
     def on_text(self, value):
         save_set()
         pass
 
-    def press_save(self):        
+    def press_save(self):
         global watch_dog
         watch_dog=1
         sm.current='menu'
@@ -154,15 +155,15 @@ class MyscreenApp(Screen):
     def on_text2(self, value):
         global watch_dog
         print("on_text 2")
-        watch_dog=1    
+        watch_dog=1
         pass
-        
+
     def on_text(self, value):
         global watch_dog
         print("on_text")
         watch_dog=1
         if self.r_sta==False:
-            save_set()        
+            save_set()
         pass
 
     def press_btn_b1(self,val):
@@ -176,7 +177,7 @@ class MyscreenApp(Screen):
         global watch_dog
         #print("b1 0: ")
         watch_dog=1
-        GPIO.output(io_jx1, GPIO.HIGH)        
+        GPIO.output(io_jx1, GPIO.HIGH)
         self.btnb1.state = "normal"
         pass
 
@@ -193,7 +194,7 @@ class MyscreenApp(Screen):
         watch_dog=1
         #print("b3 0: ",val.pos[0])
         GPIO.output(io_jx4, GPIO.HIGH)
-        GPIO.output(io_jx3, GPIO.HIGH)        
+        GPIO.output(io_jx3, GPIO.HIGH)
         self.btnb2.state = "normal"
         pass
 
@@ -212,13 +213,31 @@ class MyscreenApp(Screen):
 
     def press_am(self,txtn,val):
         if txtn=="time2":
-            self.time2.text=str(int(self.time2.text)+val)
+            cnum=int(self.time2.text)
+            if val>0:
+                if cnum<999:
+                    self.time2.text=str(int(self.time2.text)+val)
+            elif val<0:
+                if cnum>0:
+                    self.time2.text=str(int(self.time2.text)+val)
         elif txtn=="time5":
-            self.time5.text=str(int(self.time5.text)+val)
+            cnum=int(self.time5.text)
+            if val>0:
+                if cnum<999:
+                    self.time5.text=str(int(self.time5.text)+val)
+            elif val<0:
+                if cnum>0:
+                    self.time5.text=str(int(self.time5.text)+val)
         elif txtn=="txt3":
-            self.txt3.text=str(int(self.txt3.text)+val)
+            cnum=int(self.txt3.text)
+            if val>0:
+                if cnum<99:
+                    self.txt3.text=str(int(self.txt3.text)+val)
+            elif val<0:
+                if cnum>0:
+                    self.txt3.text=str(int(self.txt3.text)+val)
         pass
-        
+
     def press_set(self):
         sm.current='settings'
         pass
@@ -268,7 +287,7 @@ class MyscreenApp(Screen):
     def sch_fin(self,dt):
         global myTM1650
         print("schfin done: ",datetime.datetime.now(),self.txt3.text)
-        self.r_sta=False        
+        self.r_sta=False
         self.btnb1.disabled=False
         self.btnb2.disabled=False
         self.btnb3.disabled=False
@@ -283,8 +302,8 @@ class MyscreenApp(Screen):
         if count>0:
             count=count-1
         self.txt3.text=str(count)
-        myTM1650.R(self.txt3.text)
         myTM1650.L('  ')
+        myTM1650.R(self.txt3.text)
         GPIO.output(io_jx1, GPIO.HIGH)
         GPIO.output(io_jx2, GPIO.HIGH)
         GPIO.output(io_jx3, GPIO.HIGH)
@@ -297,7 +316,7 @@ class MyscreenApp(Screen):
         global omx,myfeh,myTM1650
 
         self=sm.current_screen
-        
+
         if self.name!='menu':
             return 0
 
@@ -330,11 +349,11 @@ class MyscreenApp(Screen):
             Clock.schedule_once(self.sch_m1,int(setscr.time1.text)/10)
 
         if self.r_sta:
-            watch_dog=1    
+            watch_dog=1
             self.lb1.bkcolor=[0,1,0,.5]
         else:
             self.lb1.bkcolor=[1,0,0,.5]
-            
+
         if GPIO.input(23)==GPIO.LOW:
             self.lb2.text='就绪'
             self.lb2.bkcolor=[0,1,0,.5]
@@ -345,7 +364,7 @@ class MyscreenApp(Screen):
             self.lb2.bkcolor=[1,0,0,.5]
             self.tgbtn.disabled=True
             self.btnb1.disabled=False
-            
+
         if GPIO.input(24)==GPIO.LOW:
             self.lb3.bkcolor=[0,1,0,.5]
             self.tgbtn.disabled |= 0
@@ -355,19 +374,23 @@ class MyscreenApp(Screen):
             self.tgbtn.disabled=True
             self.btnb2.disabled=False
 
+        if GPIO.input(4)!=GPIO.LOW:
+            myTM1650.OK=0
+        else:
+            if myTM1650.OK==0:
+                myTM1650.on()
+
         #manual +10 and start
         if GPIO.input(22)==GPIO.LOW:
             if self.key_delay2==0:
-                self.txt3.text=str(int(self.txt3.text)+10)
-                myTM1650.R(self.txt3.text)
+                if int(self.txt3.text)<89:
+                    self.txt3.text=str(int(self.txt3.text)+10)
                 myTM1650.L('--')
+                myTM1650.R(self.txt3.text)
             #if self.r_sta==False:
                 self.tgbtn.text='运行中'
                 self.tgbtn.state = "down"
-                
-                if myTM1650.OK==0:
-                    myTM1650=TM1650()
-            
+
             self.key_delay2+=1
             if self.key_delay2==15:
                 self.key_delay2=0
@@ -377,16 +400,14 @@ class MyscreenApp(Screen):
         #manual +1 and start
         if GPIO.input(27)==GPIO.LOW:
             if self.key_delay==0:
-                self.txt3.text=str(int(self.txt3.text)+1)
-                myTM1650.R(self.txt3.text)
+                if int(self.txt3.text)<99:
+                    self.txt3.text=str(int(self.txt3.text)+1)
                 myTM1650.L('--')
+                myTM1650.R(self.txt3.text)
             #if self.r_sta==False:
                 self.tgbtn.text='运行中'
                 self.tgbtn.state = "down"
-                
-                if myTM1650.OK==0:
-                    myTM1650=TM1650()
-                    
+
             self.key_delay+=1
             if self.key_delay==15:
                 self.key_delay=0
@@ -396,14 +417,12 @@ class MyscreenApp(Screen):
         #manual stop
         if GPIO.input(17)==GPIO.LOW:
             print ("man btn off")
-            if myTM1650.OK==0:
-                myTM1650=TM1650()
             self.tgbtn.text='已停止'
             self.tgbtn.state = "normal"
             self.txt3.text='0'
-            myTM1650.R('0')
             if self.r_sta==True:
                 myTM1650.L('__')
+            myTM1650.R('0')
 
         try:
             if int(self.txt3.text)==0:
@@ -445,7 +464,7 @@ myscr.time5.text=s5
 myTM1650=TM1650()
 
 class TestApp(App):
-    def build(self):        
+    def build(self):
         sescr.getfile()
         Clock.schedule_interval(myscr.update_sta,1/15)
         Clock.schedule_interval(sescr.update_sta,1/15)

@@ -22,13 +22,15 @@ class TM1650(object):
     }
     bus=object
     OK=0
+    rddat=0
 
     def __init__(self):
         self.OK=0
-        # open /dev/i2c-1
-        self.bus = smbus.SMBus(1)
         try:
+            # open /dev/i2c-1
+            self.bus = smbus.SMBus(1)
             # set brightness 8 highest , 8 point 0x05
+            self.bus.write_byte( 0x27 , 0x00 )
             self.bus.write_byte( 0x27 , 0x05 )
         except:
             print('No hand box');
@@ -39,33 +41,42 @@ class TM1650(object):
         self.bus.write_byte( 0x37 , 0x00)
         self.OK=1
 
+
+    def on(self):
+        try:
+            # open /dev/i2c-1
+            # self.bus = smbus.SMBus(1)
+            # set brightness 8 highest , 8 point 0x05
+            self.bus.write_byte( 0x27 , 0x05 )
+            self.bus.write_byte(0x35 , 0x08)
+            self.OK=1
+        except:
+            print('hand box on fail');
+
+
     def L(self,schar):
         try:
-            self.bus.read_byte( 0x27 )
+            self.bus.write_byte(0x34 , self.NumTab[schar[0]])
+            self.bus.write_byte(0x37 , self.NumTab[schar[1]])
         except:
             self.OK=0
-            return
-        self.bus.write_byte( 0x34 , self.NumTab[schar[0]])
-        self.bus.write_byte( 0x37 , self.NumTab[schar[1]])
-        pass
+
 
     def R(self,schar):
         try:
-            self.bus.read_byte( 0x27 )
+            if schar=='  ':
+                self.bus.write_byte(0x35 , 0x00)
+                self.bus.write_byte(0x36 , 0x00)
+                return
+            if int(schar)<10:
+                schar=' '+schar
+            self.bus.write_byte( 0x35 , self.NumTab[schar[0]])
+            self.bus.write_byte( 0x36 , self.NumTab[schar[1]])
+
         except:
             self.OK=0
-            return
 
-        if schar=='  ':
-            self.bus.write_byte( 0x35 , 0x00)
-            self.bus.write_byte( 0x36 , 0x00)
-            return
-        if int(schar)<10:
-            schar=' '+schar
-        self.bus.write_byte( 0x35 , self.NumTab[schar[0]])
-        self.bus.write_byte( 0x36 , self.NumTab[schar[1]])
-        pass
-            
+
     def _test(self):
         while True:
             self.bus.write_byte( 0x34 , self.NumTab['0'] )
