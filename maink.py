@@ -141,7 +141,7 @@ class SettingsScreen(Screen):
 
 
 class MyscreenApp(Screen):
-    
+    global myTM1650
     r_sta=False
     key_delay=0
     key_delay2=0
@@ -232,8 +232,10 @@ class MyscreenApp(Screen):
             self.tgbtn.text='已停止'
             self.tgbtn.state = "normal"
             self.txt3.text='1'
+        if myTM1650.OK==0:
+            myTM1650=TM1650()
 
-    def sch_m1(self,dt):            
+    def sch_m1(self,dt):
         print("sch_m1 done: ",datetime.datetime.now())
         GPIO.output(io_jx3, GPIO.LOW)
         GPIO.output(io_jx4, GPIO.LOW)
@@ -434,7 +436,7 @@ myscr.time2.text=s2
 myscr.time5.text=s5
 
 myTM1650=TM1650()
-print(myTM1650.OK);
+
 class TestApp(App):
     def build(self):        
         sescr.getfile()
