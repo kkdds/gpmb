@@ -21,8 +21,10 @@ class TM1650(object):
     '_':0x08
     }
     bus=object
+    OK=0
 
     def __init__(self):
+        self.OK=0
         # open /dev/i2c-1
         self.bus = smbus.SMBus(1)
         try:
@@ -30,11 +32,12 @@ class TM1650(object):
             self.bus.write_byte( 0x27 , 0x05 )
         except:
             print('No hand box');
-            return 0;
+            return;
         self.bus.write_byte( 0x34 , 0x00)
         self.bus.write_byte( 0x35 , 0x00)
         self.bus.write_byte( 0x36 , self.NumTab['0'])
         self.bus.write_byte( 0x37 , 0x00)
+        self.OK=1
 
     def L(self,schar):
         # open /dev/i2c-1
