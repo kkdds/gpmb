@@ -141,7 +141,6 @@ class SettingsScreen(Screen):
 
 
 class MyscreenApp(Screen):
-    global myTM1650
     r_sta=False
     key_delay=0
     key_delay2=0
@@ -232,8 +231,6 @@ class MyscreenApp(Screen):
             self.tgbtn.text='已停止'
             self.tgbtn.state = "normal"
             self.txt3.text='1'
-        if myTM1650.OK==0:
-            myTM1650=TM1650()
 
     def sch_m1(self,dt):
         print("sch_m1 done: ",datetime.datetime.now())
@@ -367,6 +364,10 @@ class MyscreenApp(Screen):
             #if self.r_sta==False:
                 self.tgbtn.text='运行中'
                 self.tgbtn.state = "down"
+                
+                if myTM1650.OK==0:
+                    myTM1650=TM1650()
+            
             self.key_delay2+=1
             if self.key_delay2==15:
                 self.key_delay2=0
@@ -382,6 +383,10 @@ class MyscreenApp(Screen):
             #if self.r_sta==False:
                 self.tgbtn.text='运行中'
                 self.tgbtn.state = "down"
+                
+                if myTM1650.OK==0:
+                    myTM1650=TM1650()
+                    
             self.key_delay+=1
             if self.key_delay==15:
                 self.key_delay=0
@@ -391,6 +396,8 @@ class MyscreenApp(Screen):
         #manual stop
         if GPIO.input(17)==GPIO.LOW:
             print ("man btn off")
+            if myTM1650.OK==0:
+                myTM1650=TM1650()
             self.tgbtn.text='已停止'
             self.tgbtn.state = "normal"
             self.txt3.text='0'

@@ -40,25 +40,26 @@ class TM1650(object):
         self.OK=1
 
     def L(self,schar):
-        # open /dev/i2c-1
-        # self.bus = smbus.SMBus(1)
-        # set brightness 8 highest , 8 point 0x05
-        # self.bus.write_byte( 0x27 , 0x05 )
+        try:
+            self.bus.read_byte( 0x27 )
+        except:
+            self.OK=0
+            return
         self.bus.write_byte( 0x34 , self.NumTab[schar[0]])
         self.bus.write_byte( 0x37 , self.NumTab[schar[1]])
         pass
 
     def R(self,schar):
-        # open /dev/i2c-1
-        # self.bus = smbus.SMBus(1)
-        # set brightness 8 highest , 8 point 0x05
-        # self.bus.write_byte( 0x27 , 0x05 )
-        # clear screen
+        try:
+            self.bus.read_byte( 0x27 )
+        except:
+            self.OK=0
+            return
+
         if schar=='  ':
             self.bus.write_byte( 0x35 , 0x00)
             self.bus.write_byte( 0x36 , 0x00)
             return
-
         if int(schar)<10:
             schar=' '+schar
         self.bus.write_byte( 0x35 , self.NumTab[schar[0]])
