@@ -25,8 +25,12 @@ class TM1650(object):
     def __init__(self):
         # open /dev/i2c-1
         self.bus = smbus.SMBus(1)
-        self.bus.write_byte( 0x27 , 0x05 )
-        # set brightness 8 highest , 8 point 0x05
+        try:
+            # set brightness 8 highest , 8 point 0x05
+            self.bus.write_byte( 0x27 , 0x05 )
+        except:
+            print('No hand box');
+            return 0;
         self.bus.write_byte( 0x34 , 0x00)
         self.bus.write_byte( 0x35 , 0x00)
         self.bus.write_byte( 0x36 , self.NumTab['0'])
@@ -40,7 +44,7 @@ class TM1650(object):
         self.bus.write_byte( 0x34 , self.NumTab[schar[0]])
         self.bus.write_byte( 0x37 , self.NumTab[schar[1]])
         pass
-            
+
     def R(self,schar):
         # open /dev/i2c-1
         # self.bus = smbus.SMBus(1)

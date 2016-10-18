@@ -10,11 +10,22 @@ deb http://mirrors.aliyun.com/raspbian/raspbian/ jessie main non-free contrib
 deb-src http://mirrors.aliyun.com/raspbian/raspbian/ jessie main non-free contrib
 
 要装的程序
-sudo apt-get update
 sudo apt-get upgrade -y
 
+sudo apt-get update
 sudo apt-get install -y python3-smbus i2c-tools xrdp xclip feh ttf-wqy-zenhei ttf-wqy-microhei python-rpi.gpio python3-rpi.gpio samba-common-bin samba
+sudo apt-get install -y python-smbus python3-smbus i2c-tools
 sudo pip3 install pexpect aiohttp aiohttp_jinja2 configparser
+
+sudo leafpad /etc/modules    add
+i2c-bcm2708  
+i2c-dev  
+
+lsmod | grep i2c_
+That will list all the modules starting with “i2c_”. If it lists “i2c_bcm2708” then the module is running correctly.
+
+If you’ve got a Model A, B Rev 2 or B+ Pi then type the following command :
+sudo i2cdetect -y 1
 
 
 直接在图形界面设置:固定IP

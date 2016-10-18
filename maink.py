@@ -434,7 +434,7 @@ myscr.time2.text=s2
 myscr.time5.text=s5
 
 myTM1650=TM1650()
-
+print(myTM1650);
 class TestApp(App):
     def build(self):        
         sescr.getfile()
