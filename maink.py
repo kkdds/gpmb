@@ -380,11 +380,11 @@ class MyscreenApp(Screen):
             if myTM1650.OK==0:
                 myTM1650.on()
 
-        #manual +10 and start
+        #manual +5 and start
         if GPIO.input(22)==GPIO.LOW:
             if self.key_delay2==0:
-                if int(self.txt3.text)<89:
-                    self.txt3.text=str(int(self.txt3.text)+10)
+                if int(self.txt3.text)<95:
+                    self.txt3.text=str(int(self.txt3.text)+5)
                 myTM1650.L('--')
                 myTM1650.R(self.txt3.text)
             #if self.r_sta==False:
