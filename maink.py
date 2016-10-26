@@ -236,12 +236,12 @@ class PWDScreen(Screen):
     def press_submit(self):
         if  self.pt1.text!='2' or \
             self.pt2.text!='0' or \
-            self.pt3.text!='0' or \
-            self.pt4.text!='0' or \
-            self.pt5.text!='0' or \
-            self.pt6.text!='0' or \
-            self.pt7.text!='0' or \
-            self.pt8.text!='0':
+            self.pt3.text!='9' or \
+            self.pt4.text!='7' or \
+            self.pt5.text!='9' or \
+            self.pt6.text!='3' or \
+            self.pt7.text!='8' or \
+            self.pt8.text!='9':
 
             self.lbe.text='密码错误'
             return;
