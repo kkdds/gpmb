@@ -83,10 +83,10 @@ Builder.load_file('gpv1.kv')
 
 def save_set():
     kconfig.set("gpmb","s1",setscr.time1.text)
-    kconfig.set("gpmb","s2",myscr.time2.text)
+    kconfig.set("gpmb","s2",setscr.time2.text)
     kconfig.set("gpmb","s3",setscr.time3.text)
     kconfig.set("gpmb","s4",setscr.time4.text)
-    kconfig.set("gpmb","s5",myscr.time5.text)
+    kconfig.set("gpmb","s5",setscr.time5.text)
     kconfig.set("gpmb","s6",setscr.time6.text)
     kconfig.write(open('/home/pi/gpmb/'+"set.ini","w"))
     print("saved ")
@@ -120,24 +120,201 @@ class SaveScreen(Screen):
         #omx.stop()
         #myfeh.stop()
         sm.current='menu'
-        #Clock.unschedule(sescr.chpic)
+        Clock.unschedule(self.chpic)
         pass
 
     def update_sta(self,dt):
         if GPIO.input(22)==GPIO.LOW or GPIO.input(27)==GPIO.LOW:
             sm.current='menu'
+            Clock.unschedule(self.chpic)
 
+class PWDScreen(Screen):
+    def press_am(self,txtn,val):
+        if txtn=="bt1":
+            cnum=int(self.pt1.text)
+            if val>0:
+                if cnum<9:
+                    self.pt1.text=str(cnum+val)
+                else:
+                    self.pt1.text='0'
+            elif val<0:
+                if cnum>0:
+                    self.pt1.text=str(cnum+val)
+                else:
+                    self.pt1.text='9'
+        elif txtn=="bt2":
+            cnum=int(self.pt2.text)
+            if val>0:
+                if cnum<9:
+                    self.pt2.text=str(cnum+val)
+                else:
+                    self.pt2.text='0'
+            elif val<0:
+                if cnum>0:
+                    self.pt2.text=str(cnum+val)
+                else:
+                    self.pt2.text='9'
+        elif txtn=="bt3":
+            cnum=int(self.pt3.text)
+            if val>0:
+                if cnum<9:
+                    self.pt3.text=str(cnum+val)
+                else:
+                    self.pt3.text='0'
+            elif val<0:
+                if cnum>0:
+                    self.pt3.text=str(cnum+val)
+                else:
+                    self.pt3.text='9'
+        elif txtn=="bt4":
+            cnum=int(self.pt4.text)
+            if val>0:
+                if cnum<9:
+                    self.pt4.text=str(cnum+val)
+                else:
+                    self.pt4.text='0'
+            elif val<0:
+                if cnum>0:
+                    self.pt4.text=str(cnum+val)
+                else:
+                    self.pt4.text='9'
+        elif txtn=="bt5":
+            cnum=int(self.pt5.text)
+            if val>0:
+                if cnum<9:
+                    self.pt5.text=str(cnum+val)
+                else:
+                    self.pt5.text='0'
+            elif val<0:
+                if cnum>0:
+                    self.pt5.text=str(cnum+val)
+                else:
+                    self.pt5.text='9'
+        elif txtn=="bt6":
+            cnum=int(self.pt6.text)
+            if val>0:
+                if cnum<9:
+                    self.pt6.text=str(cnum+val)
+                else:
+                    self.pt6.text='0'
+            elif val<0:
+                if cnum>0:
+                    self.pt6.text=str(cnum+val)
+                else:
+                    self.pt6.text='9'
+        elif txtn=="bt7":
+            cnum=int(self.pt7.text)
+            if val>0:
+                if cnum<9:
+                    self.pt7.text=str(cnum+val)
+                else:
+                    self.pt7.text='0'
+            elif val<0:
+                if cnum>0:
+                    self.pt7.text=str(cnum+val)
+                else:
+                    self.pt7.text='9'
+        elif txtn=="bt8":
+            cnum=int(self.pt8.text)
+            if val>0:
+                if cnum<9:
+                    self.pt8.text=str(cnum+val)
+                else:
+                    self.pt8.text='0'
+            elif val<0:
+                if cnum>0:
+                    self.pt8.text=str(cnum+val)
+                else:
+                    self.pt8.text='9'
+
+    def press_back(self):
+        global watch_dog
+        watch_dog=1
+        sm.current='menu'
+        pass
+        
+    def press_submit(self):
+        if  self.pt1.text!='2' or \
+            self.pt2.text!='0' or \
+            self.pt3.text!='0' or \
+            self.pt4.text!='0' or \
+            self.pt5.text!='0' or \
+            self.pt6.text!='0' or \
+            self.pt7.text!='0' or \
+            self.pt8.text!='0':
+
+            self.lbe.text='密码错误'
+            return;
+        sm.current='settings'
+        pass
+       
 
 class SettingsScreen(Screen):
 
     def on_text(self, value):
-        save_set()
+        #save_set()
         pass
 
     def press_save(self):
         global watch_dog
         watch_dog=1
+        myscr.lbtime2.text=setscr.time2.text
+        myscr.lbtime5.text=setscr.time5.text
+        save_set()
         sm.current='menu'
+        pass
+
+    def press_am(self,txtn,val):
+        #global watch_dog
+        #watch_dog=1
+        if txtn=="time1":
+            cnum=int(self.time1.text)
+            if val>0:
+                if cnum<999:
+                    self.time1.text=str(cnum+val)
+            elif val<0:
+                if cnum>0:
+                    self.time1.text=str(cnum+val)
+        elif txtn=="time2":
+            cnum=int(self.time2.text)
+            if val>0:
+                if cnum<999:
+                    self.time2.text=str(cnum+val)
+            elif val<0:
+                if cnum>0:
+                    self.time2.text=str(cnum+val)
+        elif txtn=="time3":
+            cnum=int(self.time3.text)
+            if val>0:
+                if cnum<999:
+                    self.time3.text=str(cnum+val)
+            elif val<0:
+                if cnum>0:
+                    self.time3.text=str(cnum+val)
+        elif txtn=="time4":
+            cnum=int(self.time4.text)
+            if val>0:
+                if cnum<999:
+                    self.time4.text=str(cnum+val)
+            elif val<0:
+                if cnum>0:
+                    self.time4.text=str(cnum+val)
+        elif txtn=="time5":
+            cnum=int(self.time5.text)
+            if val>0:
+                if cnum<999:
+                    self.time5.text=str(cnum+val)
+            elif val<0:
+                if cnum>0:
+                    self.time5.text=str(cnum+val)
+        elif txtn=="time6":
+            cnum=int(self.time6.text)
+            if val>0:
+                if cnum<999:
+                    self.time6.text=str(cnum+val)
+            elif val<0:
+                if cnum>0:
+                    self.time6.text=str(cnum+val)
         pass
 
 
@@ -212,34 +389,28 @@ class MyscreenApp(Screen):
         pass
 
     def press_am(self,txtn,val):
-        if txtn=="time2":
-            cnum=int(self.time2.text)
-            if val>0:
-                if cnum<999:
-                    self.time2.text=str(int(self.time2.text)+val)
-            elif val<0:
-                if cnum>0:
-                    self.time2.text=str(int(self.time2.text)+val)
-        elif txtn=="time5":
-            cnum=int(self.time5.text)
-            if val>0:
-                if cnum<999:
-                    self.time5.text=str(int(self.time5.text)+val)
-            elif val<0:
-                if cnum>0:
-                    self.time5.text=str(int(self.time5.text)+val)
-        elif txtn=="txt3":
+        if txtn=="txt3":
             cnum=int(self.txt3.text)
             if val>0:
                 if cnum<99:
-                    self.txt3.text=str(int(self.txt3.text)+val)
+                    self.txt3.text=str(cnum+val)
             elif val<0:
                 if cnum>0:
-                    self.txt3.text=str(int(self.txt3.text)+val)
+                    self.txt3.text=str(cnum+val)
         pass
 
     def press_set(self):
-        sm.current='settings'
+        #sm.current='settings'
+        sm.current='pwdscr'
+        pwdscr.pt1.text='0'
+        pwdscr.pt2.text='0'
+        pwdscr.pt3.text='0'
+        pwdscr.pt4.text='0'
+        pwdscr.pt5.text='0'
+        pwdscr.pt6.text='0'
+        pwdscr.pt7.text='0'
+        pwdscr.pt8.text='0'
+        pwdscr.lbe.text=''
         pass
 
     def press_tgb(self):
@@ -247,7 +418,7 @@ class MyscreenApp(Screen):
             self.tgbtn.text='运行中'
         else:
             print ("tgbtn off")
-            self.tgbtn.text='已停止'
+            self.tgbtn.text='停止中'
             self.tgbtn.state = "normal"
             self.txt3.text='1'
 
@@ -255,7 +426,7 @@ class MyscreenApp(Screen):
         print("sch_m1 done: ",datetime.datetime.now())
         GPIO.output(io_jx3, GPIO.LOW)
         GPIO.output(io_jx4, GPIO.LOW)
-        Clock.schedule_once(self.sch_m2,int(self.time2.text)/10)
+        Clock.schedule_once(self.sch_m2,int(setscr.time2.text)/10)
         pass
 
     def sch_m2(self,dt):
@@ -274,7 +445,7 @@ class MyscreenApp(Screen):
     def sch_m4(self,dt):
         print("sch_m4 done: ",datetime.datetime.now())
         GPIO.output(io_jx5, GPIO.LOW)
-        Clock.schedule_once(self.sch_m5,int(self.time5.text)/10)
+        Clock.schedule_once(self.sch_m5,int(setscr.time5.text)/10)
         pass
 
     def sch_m5(self,dt):
@@ -292,10 +463,10 @@ class MyscreenApp(Screen):
         self.btnb2.disabled=False
         self.btnb3.disabled=False
         #setscr.time1.disabled=False
-        self.time2.disabled=False
+        #self.time2.disabled=False
         #setscr.time3.disabled=False
         #setscr.time4.disabled=False
-        self.time5.disabled=False
+        #self.time5.disabled=False
         self.txt3.disabled=False
         self.setbtn.disabled=False
         count=int(self.txt3.text)
@@ -323,21 +494,21 @@ class MyscreenApp(Screen):
         if self.tgbtn.state == "down" and int(self.txt3.text)>0 and self.r_sta==False:
             if GPIO.input(23)==GPIO.HIGH:
                 self.tgbtn.state='normal'
-                self.tgbtn.text='已停止'
+                self.tgbtn.text='已停止, 点击运行'
                 return 0
             if GPIO.input(24)==GPIO.HIGH:
                 self.tgbtn.state='normal'
-                self.tgbtn.text='已停止'
+                self.tgbtn.text='已停止, 点击运行'
                 return 0
             self.r_sta=True
             self.btnb1.disabled=True
             self.btnb2.disabled=True
             self.btnb3.disabled=True
             #setscr.time1.disabled=True
-            self.time2.disabled=True
+            #self.time2.disabled=True
             #setscr.time3.disabled=True
             #setscr.time4.disabled=True
-            self.time5.disabled=True
+            #self.time5.disabled=True
             self.txt3.disabled=True
             self.setbtn.disabled=True
             print("start loop : ",datetime.datetime.now())
@@ -417,7 +588,7 @@ class MyscreenApp(Screen):
         #manual stop
         if GPIO.input(17)==GPIO.LOW:
             print ("man btn off")
-            self.tgbtn.text='已停止'
+            self.tgbtn.text='停止中'
             self.tgbtn.state = "normal"
             self.txt3.text='0'
             if self.r_sta==True:
@@ -427,10 +598,10 @@ class MyscreenApp(Screen):
         try:
             if int(self.txt3.text)==0:
                 self.tgbtn.state='normal'
-                self.tgbtn.text='已停止'
+                self.tgbtn.text='已停止, 点击运行'
         except:
             self.tgbtn.state='normal'
-            self.tgbtn.text='已停止'
+            self.tgbtn.text='已停止, 点击运行'
 
         if watch_dog>0:
              watch_dog+=1
@@ -453,13 +624,17 @@ sescr=SaveScreen(name='scrsave')
 sm.add_widget(sescr)
 setscr=SettingsScreen(name='settings')
 sm.add_widget(setscr)
+pwdscr=PWDScreen(name='pwdscr')
+sm.add_widget(pwdscr)
 
 setscr.time1.text=s1
 setscr.time3.text=s3
 setscr.time4.text=s4
 setscr.time6.text=s6
-myscr.time2.text=s2
-myscr.time5.text=s5
+setscr.time2.text=s2
+setscr.time5.text=s5
+myscr.lbtime2.text=s2
+myscr.lbtime5.text=s5
 
 myTM1650=TM1650()
 
