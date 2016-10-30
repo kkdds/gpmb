@@ -31,12 +31,20 @@ myfeh=object
 
 kconfig=configparser.ConfigParser()
 kconfig.read('/home/pi/gpmb/'+"set.ini")
-s1=kconfig.get("gpmb","s1")
-s2=kconfig.get("gpmb","s2")
-s3=kconfig.get("gpmb","s3")
-s4=kconfig.get("gpmb","s4")
-s5=kconfig.get("gpmb","s5")
-s6=kconfig.get("gpmb","s6")
+try:
+    s1=kconfig.get("gpmb","s1")
+    s2=kconfig.get("gpmb","s2")
+    s3=kconfig.get("gpmb","s3")
+    s4=kconfig.get("gpmb","s4")
+    s5=kconfig.get("gpmb","s5")
+    s6=kconfig.get("gpmb","s6")
+except:
+    s1='20'
+    s2='50'
+    s3='3'
+    s4='16'
+    s5='120'
+    s6='5'
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -82,6 +90,10 @@ watch_dog=1
 Builder.load_file('gpv1.kv')
 
 def save_set():
+    try:
+        kconfig.add_section("gpmb")
+    except:
+        pass
     kconfig.set("gpmb","s1",setscr.time1.text)
     kconfig.set("gpmb","s2",setscr.time2.text)
     kconfig.set("gpmb","s3",setscr.time3.text)
