@@ -4,6 +4,7 @@
 	layout : 'numeric'
 	layout_path : '/home/pi/gpmb/'
 
+
 <SaveScreen>:
 	name:'scrsave'
 	img:img.__self__
@@ -17,153 +18,117 @@
 			size: root.size
 			nocache: True
 
-<TXIN@TextInput>:
-	multiline:False
-	font_size: 40
-	padding:12,5,5,0
+
 <KButton@Button>:
-	font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-	color: .8,.9,0,1
-	font_size: 40
+	#font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+	#color: .8,.9,0,1
+	#font_size: 40
+	size_hint:.176,.1
 <PWDScreen>:
 	pt1:_pt1.__self__
-	pt2:_pt2.__self__
-	pt3:_pt3.__self__
-	pt4:_pt4.__self__
-	pt5:_pt5.__self__
-	pt6:_pt6.__self__
-	pt7:_pt7.__self__
-	pt8:_pt8.__self__
 	lbe:_lbe.__self__
 	
 	name:'pwdscr'
-	BoxLayout:
-		orientation:'vertical'
+	
+	FloatLayout:
+		Image:
+			source:'/home/pi/gpmb/css/btm.png'
+			nocache: True
 
-		GridLayout:
-			cols: 1
-			spacing:10
-			padding:10,0,10,0
-			row_force_default:True
-			row_default_height:58
-			
-			Label:
-				text: ''
-				font_size: 40
-			Label:
-				text: '请输入密码'
-				font_size: 40
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-			Label:
-				id:_lbe
-				text: ''
-				color:1,0,0,1
-				font_size: 24
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+		Label:
+			pos_hint:{'x':0,'y':.43}
+			text: '请输入密码'
+			font_size: 40
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+		Label:
+			id:_lbe
+			pos_hint:{'x':0,'y':.36}
+			text: ''
+			color:1,0,0,1
+			font_size: 24
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+		Image:
+			#text: 'line'
+			pos_hint:{'x':.1,'y':.33}
+			size_hint:.8,1
+			source:'/home/pi/gpmb/css/4.png'
+			nocache: True
+		Image:
+			#text: 'number background'
+			pos_hint:{'x':.05,'y':.24}
+			size_hint:.9,1
+			source:'/home/pi/gpmb/css/7.png'
+			nocache: True
+		Label:
+			id:_pt1
+			text:''
+			halign:'center'
+			font_size: 40
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			pos_hint:{'x':0,'y':.24}
+			size_hint:1,1
 
-		GridLayout:
-			cols: 8
-			spacing:10
-			padding:10,0,10,60
-			row_force_default:True
-			row_default_height:58
+		KButton:
+			on_press:root.press_pwd("1")
+			pos_hint:{'x':0.12,'y':0.54}
+			background_normal : '/home/pi/gpmb/css/15.png'
+		KButton:
+			on_press:root.press_pwd("2")
+			pos_hint:{'x':0.4,'y':0.54}
+			background_normal : '/home/pi/gpmb/css/16.png'
+		KButton:
+			on_press:root.press_pwd("3")
+			pos_hint:{'x':0.68,'y':0.54}
+			background_normal : '/home/pi/gpmb/css/17.png'
+		KButton:
+			on_press:root.press_pwd("4")
+			pos_hint:{'x':0.12,'y':0.40}
+			background_normal : '/home/pi/gpmb/css/18.png'
+		KButton:
+			on_press:root.press_pwd("5")
+			pos_hint:{'x':0.4,'y':0.40}
+			background_normal : '/home/pi/gpmb/css/19.png'
+		KButton:
+			on_press:root.press_pwd("6")
+			pos_hint:{'x':0.68,'y':0.40}
+			background_normal : '/home/pi/gpmb/css/20.png'
+		KButton:
+			on_press:root.press_pwd("7")
+			pos_hint:{'x':0.12,'y':0.26}
+			background_normal : '/home/pi/gpmb/css/21.png'
+		KButton:
+			on_press:root.press_pwd("8")
+			pos_hint:{'x':0.4,'y':0.26}
+			size_hint:.176,.1
+			background_normal : '/home/pi/gpmb/css/22.png'
+		KButton:
+			on_press:root.press_pwd("9")
+			pos_hint:{'x':0.68,'y':0.26}
+			background_normal : '/home/pi/gpmb/css/23.png'
+		#KButton:
+			#on_press:root.press_pwd("0")
+			#pos_hint:{'x':0.4,'y':0.12}
+			#background_normal : '/home/pi/gpmb/css/23.png'
 
-			KButton:
-				text:'+'
-				on_press:root.press_am("bt1",1)
-			KButton:
-				text:'+'
-				on_press:root.press_am("bt2",1)
-			KButton:
-				text:'+'
-				on_press:root.press_am("bt3",1)
-			KButton:
-				text:'+'
-				on_press:root.press_am("bt4",1)
-			KButton:
-				text:'+'
-				on_press:root.press_am("bt5",1)
-			KButton:
-				text:'+'
-				on_press:root.press_am("bt6",1)
-			KButton:
-				text:'+'
-				on_press:root.press_am("bt7",1)
-			KButton:
-				text:'+'
-				on_press:root.press_am("bt8",1)
+		Button:
+			#text: '返回'
+			pos_hint:{'x':0.1,'y':0.03}
+			size_hint:.3,.1
+			on_press:root.press_back()
+			background_normal : '/home/pi/gpmb/css/25.png'
+			background_down : '/home/pi/gpmb/css/25-1.png'
 
-			TXIN:
-				id:_pt1
-			TXIN:
-				id:_pt2
-			TXIN:
-				id:_pt3
-			TXIN:
-				id:_pt4
-			TXIN:
-				id:_pt5
-			TXIN:
-				id:_pt6
-			TXIN:
-				id:_pt7
-			TXIN:
-				id:_pt8
-
-			KButton:
-				text:'-'
-				on_press:root.press_am("bt1",-1)
-			KButton:
-				text:'-'
-				on_press:root.press_am("bt2",-1)
-			KButton:
-				text:'-'
-				on_press:root.press_am("bt3",-1)
-			KButton:
-				text:'-'
-				on_press:root.press_am("bt4",-1)
-			KButton:
-				text:'-'
-				on_press:root.press_am("bt5",-1)
-			KButton:
-				text:'-'
-				on_press:root.press_am("bt6",-1)
-			KButton:
-				text:'-'
-				on_press:root.press_am("bt7",-1)
-			KButton:
-				text:'-'
-				on_press:root.press_am("bt8",-1)
-
-		GridLayout:
-			cols: 2
-			spacing:10
-			padding:10,0,10,60
-			row_force_default:True
-			row_default_height:88
-			Button:
-				text: '返回'
-				color: 1,1,1,1
-				font_size: 40
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-				on_press:root.press_back()
-			Button:
-				text: '确认'
-				color: 1,1,1,1
-				font_size: 40
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-				on_press:root.press_submit()
-
-		GridLayout:
-			cols: 2
+		Button:
+			#text: '确认'
+			pos_hint:{'x':0.55,'y':0.03}
+			size_hint:.3,.1
+			on_press:root.press_submit()
+			background_normal : '/home/pi/gpmb/css/24.png'
+			background_down : '/home/pi/gpmb/css/24-1.png'
 
 
 <amButton@Button>:
-	font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-	pos: 0, 100
-	size: 100, 50
-	color: .8,.9,0,1
-	font_size: 40
+	size_hint:.1408,.08
 <SettingsScreen>:
 	time1:_time1.__self__
 	time3:_time3.__self__
@@ -173,154 +138,164 @@
 	time5:_time5.__self__
 
 	name:'settings'
-	BoxLayout:
-		orientation:'vertical'
+	FloatLayout:
+		Image:
+			source:'/home/pi/gpmb/css/btm.png'
+			nocache: True
+		Image:
+			#text: 'number background'
+			pos_hint:{'x':.05,'y':.12}
+			size_hint:.9,1
+			source:'/home/pi/gpmb/css/7.png'
+			nocache: True
+		Image:
+			#text: 'number background'
+			pos_hint:{'x':.05,'y':-.31}
+			size_hint:.9,1
+			source:'/home/pi/gpmb/css/7.png'
+			nocache: True
 
-		GridLayout:
-			cols: 1
-			spacing:10
-			padding:10,0,10,10
-			row_force_default:True
-			row_default_height:88
-			Button:
-				id:tg_btn
-				text: '保存并返回控制界面'
-				color: 1,1,1,1
-				font_size: 40
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-				on_press:root.press_save()
-			Label:
-				text: ''
+		Button:
+			id:tg_btn
+			on_press:root.press_save()
+			size_hint:.74,.09
+			pos_hint:{'x':0.13,'y':.88}
+			background_normal : '/home/pi/gpmb/css/26.png'
+			background_down : '/home/pi/gpmb/css/26-1.png'
 
-		GridLayout:
-			cols: 3
-			spacing:10
-			padding:10,0,10,60
-			row_force_default:True
-			row_default_height:58
+		Image:
+			#text: '断水延迟'
+			pos_hint:{'x':-0.33,'y':.30}
+			source:'/home/pi/gpmb/css/33.png'
+			nocache: True
+		Image:
+			#text: '搅拌传送'
+			pos_hint:{'x':-0.03,'y':.30}
+			source:'/home/pi/gpmb/css/34.png'
+			nocache: True
+		Image:
+			#text: '延迟进水'
+			pos_hint:{'x':0.25,'y':.30}
+			source:'/home/pi/gpmb/css/32.png'
+			nocache: True
 
-			Label:
-				text:'延迟进水'
-				font_size: 30
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-			Label:
-				text:'断水延迟'
-				font_size: 30
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-			Label:
-				text:'搅拌传送'
-				font_size: 30
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+		amButton:
+			#text:'+'
+			pos_hint:{'x':0.12,'y':.69}
+			on_press:root.press_am("time1",1)
+			background_normal: '/home/pi/gpmb/css/5.png'
+		amButton:
+			#text:'+'
+			pos_hint:{'x':0.4,'y':.69}
+			on_press:root.press_am("time3",1)
+			background_normal: '/home/pi/gpmb/css/5.png'
+		amButton:
+			#text:'+'
+			pos_hint:{'x':0.68,'y':.69}
+			on_press:root.press_am("time4",1)
+			background_normal: '/home/pi/gpmb/css/5.png'
 
-			amButton:
-				text:'+'
-				on_press:root.press_am("time1",1)
-			amButton:
-				text:'+'
-				on_press:root.press_am("time3",1)
-			amButton:
-				text:'+'
-				on_press:root.press_am("time4",1)
+		Label:
+			id:_time1
+			font_size: 40
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			pos_hint:{'x':0.12,'y':.58}
+			size_hint:.1408,.08
+		Label:
+			id:_time3
+			font_size: 40
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			pos_hint:{'x':0.4,'y':.58}
+			size_hint:.1408,.08
+		Label:
+			id:_time4
+			font_size: 40
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			pos_hint:{'x':0.68,'y':.58}
+			size_hint:.1408,.08
 
-			TextInput:
-				id:_time1
-				text: '1'
-				multiline:False
-				font_size: 40
-				padding:40,5,5,0
-				#on_focus:root.on_focus()
-				#on_text:root.on_text(self.text)
-			TextInput:
-				id:_time3
-				text: '2'
-				multiline:False
-				font_size: 40
-				padding:40,5,5,0
-				#on_focus:root.on_focus()
-				#on_text:root.on_text(self.text)
-			TextInput:
-				id:_time4
-				text: '10'
-				multiline:False
-				font_size: 40
-				padding:40,5,5,0
-				#on_focus:root.on_focus()
-				#on_text:root.on_text(self.text)
+		amButton:
+			#text:'-'
+			pos_hint:{'x':0.12,'y':.47}
+			on_press:root.press_am("time1",-1)
+			background_normal: '/home/pi/gpmb/css/6.png'
+		amButton:
+			#text:'-'
+			pos_hint:{'x':0.4,'y':.47}
+			on_press:root.press_am("time3",-1)
+			background_normal: '/home/pi/gpmb/css/6.png'
+		amButton:
+			#text:'-'
+			pos_hint:{'x':0.68,'y':.47}
+			on_press:root.press_am("time4",-1)
+			background_normal: '/home/pi/gpmb/css/6.png'
 
-			amButton:
-				text:'-'
-				on_press:root.press_am("time1",-1)
-			amButton:
-				text:'-'
-				on_press:root.press_am("time3",-1)
-			amButton:
-				text:'-'
-				on_press:root.press_am("time4",-1)
+		Image:
+			#text: '面条长度'
+			pos_hint:{'x':-0.31,'y':-.13}
+			source:'/home/pi/gpmb/css/27.png'
+			nocache: True
+		Image:
+			#text: '时间'
+			pos_hint:{'x':-.04,'y':-.13}
+			source:'/home/pi/gpmb/css/28.png'
+			nocache: True
+		Image:
+			#text: '传送延时'
+			pos_hint:{'x':0.25,'y':-.13}
+			source:'/home/pi/gpmb/css/31.png'
+			nocache: True
 
-		GridLayout:
-			cols: 3
-			spacing:10
-			padding:10,0,10,60
-			row_force_default:True
-			row_default_height:58
+		amButton:
+			#text:'+'
+			pos_hint:{'x':0.12,'y':.26}
+			on_press:root.press_am("time2",1)
+			background_normal: '/home/pi/gpmb/css/5.png'
+		amButton:
+			#text:'+'
+			pos_hint:{'x':0.4,'y':.26}
+			on_press:root.press_am("time5",1)
+			background_normal: '/home/pi/gpmb/css/5.png'
+		amButton:
+			#text:'+'
+			pos_hint:{'x':0.68,'y':.26}
+			on_press:root.press_am("time6",1)
+			background_normal: '/home/pi/gpmb/css/5.png'
 
-			Label:
-				text:'面条长度'
-				font_size: 32
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-			Label:
-				text:'时间'
-				font_size: 40
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-			Label:
-				text:'传送延时'
-				font_size: 30
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+		Label:
+			id:_time2
+			font_size: 40
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			pos_hint:{'x':0.12,'y':.15}
+			size_hint:.1408,.08
+		Label:
+			id:_time5
+			font_size: 40
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			pos_hint:{'x':0.4,'y':.15}
+			size_hint:.1408,.08
+		Label:
+			id:_time6
+			font_size: 40
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			pos_hint:{'x':0.68,'y':.15}
+			size_hint:.1408,.08
 
-			amButton:
-				text:'+'
-				on_press:root.press_am("time2",1)
-			amButton:
-				text:'+'
-				on_press:root.press_am("time5",1)
-			amButton:
-				text:'+'
-				on_press:root.press_am("time6",1)
-
-			TextInput:
-				id:_time2
-				text: '55'
-				multiline:False
-				font_size: 40
-				padding:40,5,5,0
-				#on_focus:root.on_focus()
-				#on_text:root.on_text(self.text)
-			TextInput:
-				id:_time5
-				text: '12'
-				multiline:False
-				font_size: 40
-				padding:40,5,5,0
-				#on_focus:root.on_focus()
-				#on_text:root.on_text(self.text)
-			TextInput:
-				id:_time6
-				text: '3'
-				multiline:False
-				font_size: 40
-				padding:40,5,5,0
-				#on_focus:root.on_focus()
-				#on_text:root.on_text(self.text)
-
-			amButton:
-				text:'-'
-				on_press:root.press_am("time2",-1)
-			amButton:
-				text:'-'
-				on_press:root.press_am("time5",-1)
-			amButton:
-				text:'-'
-				on_press:root.press_am("time6",-1)
+		amButton:
+			#text:'-'
+			pos_hint:{'x':0.12,'y':.04}
+			on_press:root.press_am("time2",-1)
+			background_normal: '/home/pi/gpmb/css/6.png'
+		amButton:
+			#text:'-'
+			pos_hint:{'x':0.4,'y':.04}
+			on_press:root.press_am("time5",-1)
+			background_normal: '/home/pi/gpmb/css/6.png'
+		amButton:
+			#text:'-'
+			pos_hint:{'x':0.68,'y':.04}
+			on_press:root.press_am("time6",-1)
+			background_normal: '/home/pi/gpmb/css/6.png'
 
 
 <MyscreenApp>:
@@ -338,180 +313,152 @@
 
 	name:'menu'
 	FloatLayout:
+		Image:
+			source:'/home/pi/gpmb/css/btm.png'
+			nocache: True
 
-		GridLayout:
-			cols: 3
-			spacing:10
-			padding:10,50,10,10
-			row_force_default:True
-			row_default_height:58
+		Image:
+			id:_lb_1
+			#text: '状态'
+			pos_hint:{'x':-0.33,'y':.42}
+			source:'/home/pi/gpmb/css/1-1.png'
+			nocache: True
+
+		Image:
+			id:_lb_2
+			#text: '可运行'
+			pos_hint:{'x':0,'y':.42}
+			source:'/home/pi/gpmb/css/2-1.png'
+			nocache: True
 			
-			Label:
-				id:_lb_1
-				text: '状态'
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-				color: 1,1,1,1
-				font_size: 32
-				bkcolor:[1,0,0,.5]
-				canvas:
-					Color:
-						rgba:self.bkcolor
-					Ellipse:
-						pos:self.pos[0]+self.size[0]/7,self.pos[1]-self.size[0]/6
-						size:self.size[0]*0.75,self.size[0]*0.7
-			Label:
-				id:_lb_2
-				text: '可运行'
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-				color: 1,1,1,1
-				font_size: 32
-				bkcolor:[1,0,0,.5]
-				canvas:
-					Color:
-						rgba:self.bkcolor
-					Ellipse:
-						pos:self.pos[0]+self.size[0]/7,self.pos[1]-self.size[0]/6
-						size:self.size[0]*0.75,self.size[0]*0.7
-			Label:
-				id:_lb_3
-				text: '控制杆'
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-				color: 1,1,1,1
-				font_size: 32
-				bkcolor:[1,0,0,.5]
-				canvas:
-					Color:
-						rgba:self.bkcolor
-					Ellipse:
-						pos:self.pos[0]+self.size[0]/7,self.pos[1]-self.size[0]/6
-						size:self.size[0]*0.75,self.size[0]*0.7
+		Image:
+			id:_lb_3
+			#text: '控制杆'
+			pos_hint:{'x':0.33,'y':.42}
+			source:'/home/pi/gpmb/css/3-1.png'
+			nocache: True
 
-		GridLayout:
-			cols: 3
-			spacing:10
-			padding:10,50,10,10
-			pos_hint:{'x':0,'y':.31}
+		Image:
+			#text: 'line'
+			pos_hint:{'x':.1,'y':.33}
+			size_hint:.8,1
+			source:'/home/pi/gpmb/css/4.png'
+			nocache: True
+		Image:
+			#text: 'number background'
+			pos_hint:{'x':.05,'y':.1}
+			size_hint:.9,1
+			source:'/home/pi/gpmb/css/7.png'
+			nocache: True
 
-			Label:
-				text:'面条长度'
-				font_size: 32
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-			Label:
-				text:'时间'
-				font_size: 40
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-			Label:
-				text:'份数'
-				font_size: 40
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+		Label:
+			text:'面条长度'
+			font_size: 28
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			pos_hint:{'x':-.3,'y':.28}
+		Label:
+			text:'时间'
+			font_size: 28
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			pos_hint:{'x':0,'y':.28}
+		Label:
+			text:'份数'
+			font_size: 28
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			pos_hint:{'x':0.29,'y':.28}
 
-		GridLayout:
-			cols: 3
-			spacing:10
-			padding:10,50,10,10
-			size_hint:1,.35
-			pos_hint:{'x':0,'y':.45}
+		amButton:
+			id:_txt3_ba
+			#text:'+'
+			pos_hint:{'x':0.72,'y':.67}
+			on_press:root.press_am("txt3",1)
+			background_normal: '/home/pi/gpmb/css/5.png'
 
-			Label:
-				text: ''
-			Label:
-				text: ''
-			Button:
-				id:_txt3_ba
-				text:'+'
-				font_size: 40
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-				pos: 0, 100
-				size: 100, 50
-				color: .8,.9,0,1
-				font_size: 32
-				on_press:root.press_am("txt3",1)
+		Label:
+			id:_lbt2
+			text:'4'
+			font_size: 32
+			size_hint:.176,.1
+			pos_hint:{'x':0.1,'y':.55}
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+		Label:
+			id:_lbt5
+			text:'5'
+			font_size: 32
+			size_hint:.176,.1
+			pos_hint:{'x':0.4,'y':.55}
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+		Label:
+			id:_txt3
+			text: '0'
+			font_size: 32
+			#padding:40,5,5,0
+			size_hint:.176,.1
+			pos_hint:{'x':0.7,'y':.55}
+			#on_focus:root.on_focus()
+			#on_text:root.on_text2(self.text)
 
-			Label:
-				id:_lbt2
-				text:'4'
-				font_size: 32
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-			Label:
-				id:_lbt5
-				text:'5'
-				font_size: 32
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-			TextInput:
-				id:_txt3
-				text: '0'
-				multiline:False
-				font_size: 40
-				padding:40,5,5,0
-				on_focus:root.on_focus()
-				on_text:root.on_text2(self.text)
-
-			Label:
-				text: ''
-			Label:
-				text: ''
-			Button:
-				id:_txt3_bm
-				text:'-'
-				font_size: 40
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-				pos: 0, 100
-				size: 100, 50
-				color: .8,.9,0,1
-				font_size: 32
-				on_press:root.press_am("txt3",-1)
+		amButton:
+			id:_txt3_bm
+			#text:'-'
+			pos_hint:{'x':0.72,'y':.45}
+			on_press:root.press_am("txt3",-1)
+			background_normal: '/home/pi/gpmb/css/6.png'
 
 		ToggleButton:
 			id:tg_btn
-			text: '开始运行'
-			color: 1,1,1,1
-			font_size: 40
-			size_hint:1,.15
-			pos_hint:{'x':0,'y':.3}
+			#text: '开始运行'
+			size_hint:.74,.12
+			pos_hint:{'x':0.13,'y':.3}
+			#font_size: 40
 			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
 			on_press:root.press_tgb()
+			background_normal : '/home/pi/gpmb/css/off.png'
+			background_down : '/home/pi/gpmb/css/on.png'
+			background_disabled_normal : '/home/pi/gpmb/css/off-1.png'
+			background_disabled_down : '/home/pi/gpmb/css/on-1.png'
 
-		GridLayout:
-			cols: 3
-			spacing:10
-			padding:10
-			size_hint:1,.15
-			pos_hint:{'x':0,'y':.15}
-			
-			ToggleButton:
-				id:_btn_b1
-				text:'漏斗'
-				font_size: 40
-				size_hint:1,.1
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-				color: .8,.9,0,1
-				on_press:root.press_btn_b1(_btn_b1)
-				
-			ToggleButton:
-				id:_btn_b2
-				text:'水泵'
-				font_size: 40
-				size_hint:1,.1
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-				color: .8,.9,0,1
-				on_press:root.press_btn_b2(_btn_b2)
-				
-			Button:
-				id:_btn_b3
-				text:'滚筒'
-				font_size: 40
-				size_hint:1,.1
-				font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-				color: .8,.9,0,1
-				on_press:root.press_btn_b3(_btn_b3)
-				on_release:root.release_btn_b3(_btn_b3)
+		ToggleButton:
+			id:_btn_b1
+			#text:'漏斗'
+			pos_hint:{'x':0.025,'y':0.16}
+			size_hint:.3,.1
+			on_press:root.press_btn_b1(_btn_b1)
+			background_normal : '/home/pi/gpmb/css/10.png'
+			background_down : '/home/pi/gpmb/css/10-1.png'
+			background_disabled_normal : '/home/pi/gpmb/css/10-1.png'
+			background_disabled_down : '/home/pi/gpmb/css/10-1.png'
 
-			
+		ToggleButton:
+			id:_btn_b2
+			#text:'水泵'
+			pos_hint:{'x':0.35,'y':0.16}
+			size_hint:.3,.1
+			on_press:root.press_btn_b2(_btn_b2)
+			background_normal : '/home/pi/gpmb/css/11.png'
+			background_down : '/home/pi/gpmb/css/11-1.png'
+			background_disabled_normal : '/home/pi/gpmb/css/11-1.png'
+			background_disabled_down : '/home/pi/gpmb/css/11-1.png'
+
+		Button:
+			id:_btn_b3
+			#text:'滚筒'
+			pos_hint:{'x':0.675,'y':0.16}
+			size_hint:.3,.1
+			on_press:root.press_btn_b3(_btn_b3)
+			on_release:root.release_btn_b3(_btn_b3)
+			background_normal : '/home/pi/gpmb/css/12.png'
+			background_down : '/home/pi/gpmb/css/12-1.png'
+			background_disabled_normal : '/home/pi/gpmb/css/12-1.png'
+			background_disabled_down : '/home/pi/gpmb/css/12-1.png'
+
 		Button:
 			id:set_btn
-			text: '设置'
-			color: 1,1,1,1
-			font_size: 40
-			size_hint:1,.15
-			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			#text: '设置'
+			pos_hint:{'x':0.73,'y':0.03}
+			size_hint:.176,.1
 			on_press:root.press_set()
+			background_normal : '/home/pi/gpmb/css/13.png'
+			background_down : '/home/pi/gpmb/css/13-1.png'
+			background_disabled_normal : '/home/pi/gpmb/css/13-1.png'
+			background_disabled_down : '/home/pi/gpmb/css/13-1.png'
