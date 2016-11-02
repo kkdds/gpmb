@@ -326,7 +326,7 @@ class MyscreenApp(Screen):
         print("sch_m3 done: ",datetime.datetime.now())
         GPIO.output(io_jx3, GPIO.HIGH)
         GPIO.output(io_jx4, GPIO.HIGH)
-        Clock.schedule_once(self.sch_m4,int(setscr.time4.text))
+        Clock.schedule_once(self.sch_m4,int(setscr.time4.text)/10)
         pass
 
     def sch_m4(self,dt):
