@@ -23,5 +23,5 @@ from os import system
 class TURN_OFF(object):
     def __init__(self):
         #return
-        print('turn off')
-        system('halt')
+        #print('turn off')
+        system('sudo halt')
