@@ -14,8 +14,14 @@ class FEH(object):
         #print(cmd)
         self._process = pexpect.spawn(cmd)
 
-            
     def stop(self):
         self._process.send(self._QUIT_CMD)
         self._process.terminate(force=True)
-			
+
+
+from os import system
+class TURN_OFF(object):
+    def __init__(self):
+        #return
+        print('turn off')
+        system('halt')

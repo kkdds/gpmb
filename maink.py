@@ -26,7 +26,7 @@ from TM1650 import TM1650
 myTM1650=object
 #from pyomxplayer import OMXPlayer
 #omx=object
-from feh import FEH
+from feh import TURN_OFF
 myfeh=object
 
 kconfig=configparser.ConfigParser()
@@ -141,6 +141,7 @@ class SaveScreen(Screen):
             sm.current='menu'
             Clock.unschedule(self.chpic)
 
+
 class PWDScreen(Screen):
     def press_pwd(self,txtn):
         self.pt1.text=self.pt1.text+txtn
@@ -151,13 +152,21 @@ class PWDScreen(Screen):
         watch_dog=1
         sm.current='menu'
         pass
-        
+
     def press_submit(self):
         if  self.pt1.text!='159357':
             self.lbe.text='密码错误'
             self.pt1.text=''
             return;
         sm.current='settings'
+        pass
+
+    def turn_off(self):
+        if self.lbe.text!='再按一次关机':
+            self.lbe.text='再按一次关机'
+        else:
+            self.lbe.text='再见'
+            TURN_OFF()
         pass
 
 
@@ -227,6 +236,15 @@ class SettingsScreen(Screen):
             elif val<0:
                 if cnum>0:
                     self.time6.text=str(cnum+val)
+        pass
+
+    def test_jb(self):
+        GPIO.output(io_jx2, GPIO.LOW)
+        Clock.schedule_once(self.btn_jb_ontime,5)
+        pass
+    def btn_jb_ontime(self,val):
+        GPIO.output(io_jx2, GPIO.HIGH)
+        self.btn_jb.state = "normal"
         pass
 
 

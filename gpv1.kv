@@ -126,6 +126,14 @@
 			background_normal : '/home/pi/gpmb/css/24.png'
 			background_down : '/home/pi/gpmb/css/24-1.png'
 
+		Button:
+			text: '关机'
+			pos_hint:{'x':0.0,'y':0.94}
+			size_hint:.18,.06
+			font_size: 18
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			on_press:root.turn_off()
+
 
 <amButton@Button>:
 	size_hint:.1408,.08
@@ -136,6 +144,7 @@
 	time6:_time6.__self__
 	time2:_time2.__self__
 	time5:_time5.__self__
+	btn_jb:_btn_jb.__self__
 
 	name:'settings'
 	FloatLayout:
@@ -173,11 +182,19 @@
 			pos_hint:{'x':-0.03,'y':.30}
 			source:'/home/pi/gpmb/css/33.png'
 			nocache: True
-		Image:
+		ToggleButton:
+			id:_btn_jb
+			#text: '搅拌'
+			pos_hint:{'x':0.65,'y':.79}
+			size_hint:.21,.07
+			on_press:root.test_jb()
+			background_normal : '/home/pi/gpmb/css/35.png'
+			background_down : '/home/pi/gpmb/css/35-1.png'
+		#Image:
 			#text: '搅拌传送'
-			pos_hint:{'x':0.25,'y':.30}
-			source:'/home/pi/gpmb/css/34.png'
-			nocache: True
+			#pos_hint:{'x':0.25,'y':.30}
+			#source:'/home/pi/gpmb/css/34.png'
+			#nocache: True
 
 		amButton:
 			#text:'+'
