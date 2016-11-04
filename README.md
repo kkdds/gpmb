@@ -146,7 +146,8 @@ sudo create_ap --no-virt wlan0 eth0 热点名 密码
 
 ifup、ifdown = ifconfig eth0  up/down
 
-sudo apt-get install util-linux procps hostapd iproute2 iw haveged dnsmasq
+sudo apt-get update
+sudo apt-get install -y util-linux procps hostapd iproute2 iw haveged dnsmasq
 git clone https://github.com/oblique/create_ap.git
 cd create_ap
 sudo make install
