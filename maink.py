@@ -39,10 +39,10 @@ try:
     s5=kconfig.get("gpmb","s5")
     s6=kconfig.get("gpmb","s6")
 except:
-    s1='20'
-    s2='50'
-    s3='3'
-    s4='16'
+    s1='2'
+    s2='7'
+    s3='30'
+    s4='52'
     s5='120'
     s6='5'
 
@@ -449,6 +449,10 @@ class MyscreenApp(Screen):
 
         #manual +5 and start
         if GPIO.input(22)==GPIO.LOW:
+            if GPIO.input(23)==GPIO.HIGH:
+                return;
+            if GPIO.input(24)==GPIO.HIGH:
+                return;
             if self.key_delay2==0:
                 if int(self.txt3.text)<95:
                     self.txt3.text=str(int(self.txt3.text)+5)
@@ -466,6 +470,10 @@ class MyscreenApp(Screen):
 
         #manual +1 and start
         if GPIO.input(27)==GPIO.LOW:
+            if GPIO.input(23)==GPIO.HIGH:
+                return;
+            if GPIO.input(24)==GPIO.HIGH:
+                return;
             if self.key_delay==0:
                 if int(self.txt3.text)<99:
                     self.txt3.text=str(int(self.txt3.text)+1)
