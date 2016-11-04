@@ -145,7 +145,10 @@ sudo create_ap --no-virt wlan0 eth0 热点名 密码
 是不是很简单，这个AP的局域网无线传输速度居然比我原来那个老AP还快一倍，也算是惊喜了，从此我的树莓派3又增加了一个功能。
 
 ifup、ifdown = ifconfig eth0  up/down
-启动、关闭 网络接口
 
+sudo apt-get install util-linux procps hostapd iproute2 iw haveged dnsmasq
+git clone https://github.com/oblique/create_ap.git
+cd create_ap
+sudo make install
 sudo ifdown wlan0
 sudo create_ap --no-virt -n -g 192.168.11.22 wlan0 zmj001 66341703
