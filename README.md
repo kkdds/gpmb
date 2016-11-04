@@ -15,7 +15,7 @@ sudo apt-get upgrade -y
 sudo apt-get update
 sudo apt-get install -y python3-smbus i2c-tools xrdp xclip feh ttf-wqy-zenhei ttf-wqy-microhei python-rpi.gpio python3-rpi.gpio samba-common-bin samba
 sudo apt-get install -y python-smbus python3-smbus i2c-tools
-sudo pip3 install pexpect aiohttp aiohttp_jinja2 configparser
+sudo pip3 install pexpect aiohttp==0.22.5 aiohttp_jinja2 configparser
 
 sudo leafpad /etc/modules    add
 i2c-bcm2708  
