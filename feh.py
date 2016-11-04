@@ -25,3 +25,4 @@ class TURN_OFF(object):
         #return
         #print('turn off')
         system('sudo halt')
+        #system('sudo killall -9 python3')
