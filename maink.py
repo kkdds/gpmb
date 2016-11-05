@@ -38,6 +38,7 @@ try:
     s4=kconfig.get("gpmb","s4")
     s5=kconfig.get("gpmb","s5")
     s6=kconfig.get("gpmb","s6")
+    ct=kconfig.get("gpmb","ct")
 except:
     s1='2'
     s2='7'
@@ -45,6 +46,16 @@ except:
     s4='52'
     s5='120'
     s6='5'
+    ct='0'
+    kconfig.add_section('gpmb') 
+    kconfig.set("gpmb","s1",s1)
+    kconfig.set("gpmb","s2",s2)
+    kconfig.set("gpmb","s3",s3)
+    kconfig.set("gpmb","s4",s4)
+    kconfig.set("gpmb","s5",s5)
+    kconfig.set("gpmb","s6",s6)
+    kconfig.set("gpmb","ct",ct)
+    kconfig.write(open('/home/pi/gpmb/'+"set.ini","w"))
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
@@ -154,12 +165,18 @@ class PWDScreen(Screen):
         pass
 
     def press_submit(self):
-        if  self.pt1.text!='159357':
+        if self.pt1.text=='159357':
+            sm.current='settings'
+        elif self.pt1.text=='953568':
+            global ct
+            ct='0'
+            setscr.ct.text='计数:'+ct
+            kconfig.set("gpmb","ct",ct)
+            kconfig.write(open('/home/pi/gpmb/'+"set.ini","w"))
+            sm.current='settings'
+        else:
             self.lbe.text='密码错误'
             self.pt1.text=''
-            return;
-        sm.current='settings'
-        pass
 
     def turn_off(self):
         if self.lbe.text!='再按一次关机':
@@ -361,7 +378,7 @@ class MyscreenApp(Screen):
         pass
 
     def sch_fin(self,dt):
-        global myTM1650
+        global myTM1650,ct
         print("schfin done: ",datetime.datetime.now(),self.txt3.text)
         self.r_sta=False
         self.btnb1.disabled=False
@@ -372,6 +389,10 @@ class MyscreenApp(Screen):
         count=int(self.txt3.text)
         if count>0:
             count=count-1
+            ct=str(int(ct)+1)
+            setscr.ct.text='计数:'+ct
+            kconfig.set("gpmb","ct",ct)
+            kconfig.write(open('/home/pi/gpmb/'+"set.ini","w"))
         self.txt3.text=str(count)
         myTM1650.L('  ')
         myTM1650.R(self.txt3.text)
@@ -537,6 +558,7 @@ setscr.time4.text=s4
 setscr.time6.text=s6
 setscr.time2.text=s2
 setscr.time5.text=s5
+setscr.ct.text='计数:'+ct
 myscr.lbtime2.text=s2
 myscr.lbtime5.text=s5
 

@@ -145,6 +145,7 @@
 	time2:_time2.__self__
 	time5:_time5.__self__
 	btn_jb:_btn_jb.__self__
+	ct:_ct.__self__
 
 	name:'settings'
 	FloatLayout:
@@ -163,6 +164,13 @@
 			size_hint:.9,1
 			source:'/home/pi/gpmb/css/7.png'
 			nocache: True
+		Label:
+			id:_ct
+			text_size:100,16
+			halign:'left'
+			font_size: 11
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			pos_hint:{'x':-0.39,'y':.495}
 
 		Button:
 			id:tg_btn
