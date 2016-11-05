@@ -41,9 +41,9 @@ try:
     ct=kconfig.get("gpmb","ct")
 except:
     s1='2'
-    s2='7'
-    s3='30'
-    s4='52'
+    s2='30'
+    s3='52'
+    s4='7'
     s5='120'
     s6='5'
     ct='0'
