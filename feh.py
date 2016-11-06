@@ -25,4 +25,11 @@ class TURN_OFF(object):
         #return
         #print('turn off')
         system('sudo halt')
-        #system('sudo killall -9 python3')
+
+class RESTART(object):
+    def __init__(self):
+        system('sudo reboot')
+
+class KILL_PY(object):
+    def __init__(self):
+        system('sudo killall -9 python3')

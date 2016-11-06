@@ -127,12 +127,17 @@
 			background_down : '/home/pi/gpmb/css/24-1.png'
 
 		Button:
-			text: '关机'
+			#text: '关机'
 			pos_hint:{'x':0.0,'y':0.94}
-			size_hint:.18,.06
-			font_size: 18
-			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			size_hint:.1,.06
+			background_normal : '/home/pi/gpmb/css/poweroff.png'
 			on_press:root.turn_off()
+		Button:
+			#text: '重启'
+			pos_hint:{'x':0.9,'y':0.94}
+			size_hint:.1,.06
+			background_normal : '/home/pi/gpmb/css/restart.png'
+			on_press:root.restart()
 
 
 <amButton@Button>:

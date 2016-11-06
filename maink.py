@@ -27,6 +27,8 @@ myTM1650=object
 #from pyomxplayer import OMXPlayer
 #omx=object
 from feh import TURN_OFF
+from feh import RESTART
+from feh import KILL_PY
 myfeh=object
 
 kconfig=configparser.ConfigParser()
@@ -156,7 +158,9 @@ class SaveScreen(Screen):
 class PWDScreen(Screen):
     def press_pwd(self,txtn):
         self.pt1.text=self.pt1.text+txtn
-        pass
+        
+        if self.lbe.text=='再按一次重启' and txtn=='8':
+            KILL_PY()
 
     def press_back(self):
         global watch_dog
@@ -182,13 +186,18 @@ class PWDScreen(Screen):
         if self.lbe.text!='再按一次关机':
             self.lbe.text='再按一次关机'
         else:
-            self.lbe.text='再见'
+            #self.lbe.text='再见'
             TURN_OFF()
-        pass
+
+    def restart(self):
+        if self.lbe.text!='再按一次重启':
+            self.lbe.text='再按一次重启'
+        else:
+            #self.lbe.text='再见'
+            RESTART()
 
 
 class SettingsScreen(Screen):
-
     def on_text(self, value):
         #save_set()
         pass
