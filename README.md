@@ -79,7 +79,7 @@ sudo leafpad /usr/local/lib/python3.4/dist-packages/kivy/uix/vkeyboard.py
 
 Install Kivy
 sudo apt-get update
-sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
+sudo apt-get install -y libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
    pkg-config libgl1-mesa-dev libgles2-mesa-dev \
    python-setuptools libgstreamer1.0-dev git-core \
    gstreamer1.0-plugins-{bad,base,good,ugly} \
@@ -89,10 +89,17 @@ sudo pip3 install git+https://github.com/kivy/kivy.git@master
 sudo pip3 install pexpect
 
 
+运行一次后才会产生ini文件
 sudo leafpad /home/pi/.kivy/config.ini
 keyboard_mode = dock
-旋转屏幕
-/home/pi/.kivy/config.ini line 24 ratation=>90
+旋转屏幕 line 24 ratation=>90
+
+Using Official RPi touch display
+edit the file ~/.kivy/config.ini and go to the [input] section. Add this:
+mouse = mouse
+mtdev_%(name)s = probesysfs,provider=mtdev
+hid_%(name)s = probesysfs,provider=hidinput
+
 
 sudo leafpad /boot/config.txt
 display_rotate=0 Normal
