@@ -147,6 +147,7 @@
 	time3:_time3.__self__
 	time4:_time4.__self__
 	time6:_time6.__self__
+	time7:_time7.__self__
 	time2:_time2.__self__
 	time5:_time5.__self__
 	btn_jb:_btn_jb.__self__
@@ -260,71 +261,92 @@
 			on_press:root.press_am("time4",-1)
 			background_normal: '/home/pi/gpmb/css/6.png'
 
-		Image:
-			#text: '面条长度'
-			pos_hint:{'x':-0.31,'y':-.13}
-			source:'/home/pi/gpmb/css/27.png'
-			nocache: True
-		Image:
-			#text: '时间'
-			pos_hint:{'x':-.04,'y':-.13}
-			source:'/home/pi/gpmb/css/28.png'
-			nocache: True
-		Image:
-			#text: '传送延时'
-			pos_hint:{'x':0.25,'y':-.13}
-			source:'/home/pi/gpmb/css/31.png'
-			nocache: True
+		Label:
+			text: '面条长度'
+			font_size: 30
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			pos_hint:{'x':-0.35,'y':-.13}
+		Label:
+			text: '时间'
+			font_size: 30
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			pos_hint:{'x':-.12,'y':-.13}
+		Label:
+			text: '传送1'
+			font_size: 30
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			pos_hint:{'x':0.13,'y':-.13}
+		Label:
+			text: '传送2'
+			font_size: 30
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			pos_hint:{'x':0.38,'y':-.13}
 
 		amButton:
 			#text:'+'
-			pos_hint:{'x':0.12,'y':.26}
+			pos_hint:{'x':0.04,'y':.26}
 			on_press:root.press_am("time2",1)
 			background_normal: '/home/pi/gpmb/css/5.png'
 		amButton:
 			#text:'+'
-			pos_hint:{'x':0.4,'y':.26}
+			pos_hint:{'x':0.30,'y':.26}
 			on_press:root.press_am("time5",1)
 			background_normal: '/home/pi/gpmb/css/5.png'
 		amButton:
 			#text:'+'
-			pos_hint:{'x':0.68,'y':.26}
+			pos_hint:{'x':0.56,'y':.26}
 			on_press:root.press_am("time6",1)
+			background_normal: '/home/pi/gpmb/css/5.png'
+		amButton:
+			#text:'+'
+			pos_hint:{'x':0.82,'y':.26}
+			on_press:root.press_am("time7",1)
 			background_normal: '/home/pi/gpmb/css/5.png'
 
 		Label:
 			id:_time2
 			font_size: 40
 			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-			pos_hint:{'x':0.12,'y':.15}
+			pos_hint:{'x':0.08,'y':.15}
 			size_hint:.1408,.08
 		Label:
 			id:_time5
 			font_size: 40
 			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-			pos_hint:{'x':0.4,'y':.15}
+			pos_hint:{'x':0.32,'y':.15}
 			size_hint:.1408,.08
 		Label:
 			id:_time6
 			font_size: 40
 			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
-			pos_hint:{'x':0.68,'y':.15}
+			pos_hint:{'x':0.54,'y':.15}
+			size_hint:.1408,.08
+		Label:
+			id:_time7
+			font_size: 40
+			font_name:'/usr/share/fonts/truetype/wqy/wqy-microhei.ttc'
+			pos_hint:{'x':0.78,'y':.15}
 			size_hint:.1408,.08
 
 		amButton:
 			#text:'-'
-			pos_hint:{'x':0.12,'y':.04}
+			pos_hint:{'x':0.04,'y':.04}
 			on_press:root.press_am("time2",-1)
 			background_normal: '/home/pi/gpmb/css/6.png'
 		amButton:
 			#text:'-'
-			pos_hint:{'x':0.4,'y':.04}
+			pos_hint:{'x':0.3,'y':.04}
 			on_press:root.press_am("time5",-1)
 			background_normal: '/home/pi/gpmb/css/6.png'
 		amButton:
 			#text:'-'
-			pos_hint:{'x':0.68,'y':.04}
+			pos_hint:{'x':0.56,'y':.04}
 			on_press:root.press_am("time6",-1)
+			background_normal: '/home/pi/gpmb/css/6.png'
+		amButton:
+			#text:'-'
+			pos_hint:{'x':0.82,'y':.04}
+			on_press:root.press_am("time7",-1)
 			background_normal: '/home/pi/gpmb/css/6.png'
 
 

@@ -40,6 +40,7 @@ try:
     s4=kconfig.get("gpmb","s4")
     s5=kconfig.get("gpmb","s5")
     s6=kconfig.get("gpmb","s6")
+    s7=kconfig.get("gpmb","s7")
     ct=kconfig.get("gpmb","ct")
 except:
     s1='2'
@@ -48,6 +49,7 @@ except:
     s4='30'
     s5='120'
     s6='5'
+    s6='3'
     ct='0'
     kconfig.add_section('gpmb') 
     kconfig.set("gpmb","s1",s1)
@@ -56,6 +58,7 @@ except:
     kconfig.set("gpmb","s4",s4)
     kconfig.set("gpmb","s5",s5)
     kconfig.set("gpmb","s6",s6)
+    kconfig.set("gpmb","s7",s7)
     kconfig.set("gpmb","ct",ct)
     kconfig.write(open('/home/pi/gpmb/'+"set.ini","w"))
 
@@ -66,8 +69,8 @@ io_jx2=16#
 io_jx3=19#
 io_jx4=13#
 io_jx5=20#
-io_jx6=21#
-io_jx7=6
+io_jx6=21#传送带1
+io_jx7=6#传送带2
 io_jx8=5
 GPIO.setup(io_jx1, GPIO.OUT)
 GPIO.setup(io_jx2, GPIO.OUT)
@@ -113,6 +116,7 @@ def save_set():
     kconfig.set("gpmb","s4",setscr.time4.text)
     kconfig.set("gpmb","s5",setscr.time5.text)
     kconfig.set("gpmb","s6",setscr.time6.text)
+    kconfig.set("gpmb","s7",setscr.time7.text)
     kconfig.write(open('/home/pi/gpmb/'+"set.ini","w"))
     print("saved ")
     pass
@@ -262,6 +266,14 @@ class SettingsScreen(Screen):
             elif val<0:
                 if cnum>0:
                     self.time6.text=str(cnum+val)
+        elif txtn=="time7":
+            cnum=int(self.time7.text)
+            if val>0:
+                if cnum<99:
+                    self.time7.text=str(cnum+val)
+            elif val<0:
+                if cnum>0:
+                    self.time7.text=str(cnum+val)
         pass
 
     def test_jb(self):
@@ -383,7 +395,13 @@ class MyscreenApp(Screen):
         print("sch_m5 done: ",datetime.datetime.now())
         GPIO.output(io_jx2, GPIO.HIGH)
         GPIO.output(io_jx5, GPIO.HIGH)
-        Clock.schedule_once(self.sch_fin,int(setscr.time6.text))
+        Clock.schedule_once(self.sch_m6,int(setscr.time6.text))
+        pass
+
+    def sch_m6(self,dt):
+        print("sch_m6 done: ",datetime.datetime.now())
+        GPIO.output(io_jx6, GPIO.HIGH)
+        Clock.schedule_once(self.sch_fin,int(setscr.time7.text))
         pass
 
     def sch_fin(self,dt):
@@ -411,6 +429,7 @@ class MyscreenApp(Screen):
         GPIO.output(io_jx4, GPIO.HIGH)
         GPIO.output(io_jx5, GPIO.HIGH)
         GPIO.output(io_jx6, GPIO.HIGH)
+        GPIO.output(io_jx7, GPIO.HIGH)
 
     def update_sta(self,dt):
         global watch_dog
@@ -432,6 +451,7 @@ class MyscreenApp(Screen):
             GPIO.output(io_jx1, GPIO.LOW)
             GPIO.output(io_jx2, GPIO.LOW)
             GPIO.output(io_jx6, GPIO.LOW)
+            GPIO.output(io_jx7, GPIO.LOW)
             myTM1650.L('--')
             myTM1650.R(self.txt3.text)
             Clock.schedule_once(self.sch_m1,int(setscr.time1.text)/10)
@@ -565,6 +585,7 @@ setscr.time1.text=s1
 setscr.time3.text=s3
 setscr.time4.text=s4
 setscr.time6.text=s6
+setscr.time7.text=s7
 setscr.time2.text=s2
 setscr.time5.text=s5
 setscr.ct.text='计数:'+ct
