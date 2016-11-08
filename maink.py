@@ -395,13 +395,21 @@ class MyscreenApp(Screen):
         print("sch_m5 done: ",datetime.datetime.now())
         GPIO.output(io_jx2, GPIO.HIGH)
         GPIO.output(io_jx5, GPIO.HIGH)
-        Clock.schedule_once(self.sch_m6,int(setscr.time6.text))
+        #Clock.schedule_once(self.sch_fin,int(setscr.time6.text))
+        self.sch_fin(1)
         pass
 
     def sch_m6(self,dt):
         print("sch_m6 done: ",datetime.datetime.now())
         GPIO.output(io_jx6, GPIO.HIGH)
-        Clock.schedule_once(self.sch_fin,int(setscr.time7.text))
+        Clock.schedule_once(self.sch_m7,int(setscr.time7.text))
+        pass
+
+    def sch_m7(self,dt):
+        print("sch_m7 done: ",datetime.datetime.now())
+        GPIO.output(io_jx7, GPIO.HIGH)
+        #Clock.schedule_once(self.sch_fin,int(setscr.time7.text))
+        #self.sch_fin()
         pass
 
     def sch_fin(self,dt):
@@ -420,6 +428,9 @@ class MyscreenApp(Screen):
             setscr.ct.text='计数:'+ct
             kconfig.set("gpmb","ct",ct)
             kconfig.write(open('/home/pi/gpmb/'+"set.ini","w"))
+        if count==0:
+            print("final: ",datetime.datetime.now())
+            Clock.schedule_once(self.sch_m6,int(setscr.time6.text))
         self.txt3.text=str(count)
         myTM1650.L('  ')
         myTM1650.R(self.txt3.text)
@@ -428,15 +439,14 @@ class MyscreenApp(Screen):
         GPIO.output(io_jx3, GPIO.HIGH)
         GPIO.output(io_jx4, GPIO.HIGH)
         GPIO.output(io_jx5, GPIO.HIGH)
-        GPIO.output(io_jx6, GPIO.HIGH)
-        GPIO.output(io_jx7, GPIO.HIGH)
+        #GPIO.output(io_jx6, GPIO.HIGH)
+        #GPIO.output(io_jx7, GPIO.HIGH)
 
     def update_sta(self,dt):
         global watch_dog
         global omx,myfeh,myTM1650
 
         self=sm.current_screen
-
         if self.name!='menu':
             return 0
 
@@ -455,6 +465,14 @@ class MyscreenApp(Screen):
             myTM1650.L('--')
             myTM1650.R(self.txt3.text)
             Clock.schedule_once(self.sch_m1,int(setscr.time1.text)/10)
+
+        try:
+            if int(self.txt3.text)==0:
+                self.tgbtn.state='normal'
+                #self.tgbtn.text='已停止, 点击运行'
+        except:
+            self.tgbtn.state='normal'
+            #self.tgbtn.text='已停止, 点击运行'
 
         if self.r_sta:
             watch_dog=1
@@ -548,14 +566,6 @@ class MyscreenApp(Screen):
             if self.r_sta==True:
                 myTM1650.L('__')
             myTM1650.R('0')
-
-        try:
-            if int(self.txt3.text)==0:
-                self.tgbtn.state='normal'
-                #self.tgbtn.text='已停止, 点击运行'
-        except:
-            self.tgbtn.state='normal'
-            #self.tgbtn.text='已停止, 点击运行'
 
         if watch_dog>0:
              watch_dog+=1
