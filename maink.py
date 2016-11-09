@@ -269,7 +269,7 @@ class SettingsScreen(Screen):
         elif txtn=="time7":
             cnum=int(self.time7.text)
             if val>0:
-                if cnum<99:
+                if cnum<999:
                     self.time7.text=str(cnum+val)
             elif val<0:
                 if cnum>0:
