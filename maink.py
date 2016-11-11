@@ -64,11 +64,11 @@ except:
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
-io_jx1=26#
-io_jx2=16#
-io_jx3=19#
-io_jx4=13#
-io_jx5=20#
+io_jx1=26#漏斗
+io_jx2=16#搅拌
+io_jx3=19#喷水
+io_jx4=13#电磁阀
+io_jx5=20#压面
 io_jx6=21#传送带1
 io_jx7=6#传送带2
 io_jx8=5
@@ -393,7 +393,6 @@ class MyscreenApp(Screen):
 
     def sch_m5(self,dt):
         print("sch_m5 done: ",datetime.datetime.now())
-        GPIO.output(io_jx2, GPIO.HIGH)
         GPIO.output(io_jx5, GPIO.HIGH)
         #Clock.schedule_once(self.sch_fin,int(setscr.time6.text))
         self.sch_fin(1)
@@ -401,6 +400,7 @@ class MyscreenApp(Screen):
 
     def sch_m6(self,dt):
         print("sch_m6 done: ",datetime.datetime.now())
+        GPIO.output(io_jx2, GPIO.HIGH)
         GPIO.output(io_jx6, GPIO.HIGH)
         Clock.schedule_once(self.sch_m7,int(setscr.time7.text))
         pass

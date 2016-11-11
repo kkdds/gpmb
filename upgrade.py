@@ -56,7 +56,7 @@ def sys_update(request):
 @aiohttp_jinja2.template('upgrade.html')
 def upgrade(request):
     #使用aiohttp_jinja2  methed 2
-    return {'html': 'upgrade',"ver":"20161109"}
+    return {'html': 'upgrade',"ver":"20161111"}
 
 
 @asyncio.coroutine
