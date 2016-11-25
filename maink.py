@@ -44,12 +44,12 @@ try:
     ct=kconfig.get("gpmb","ct")
 except:
     s1='2'
-    s2='52'
+    s2='64'
     s3='7'
-    s4='30'
-    s5='120'
-    s6='5'
-    s6='3'
+    s4='28'
+    s5='98'
+    s6='1'
+    s7='0'
     ct='0'
     kconfig.add_section('gpmb') 
     kconfig.set("gpmb","s1",s1)
