@@ -160,3 +160,6 @@ cd create_ap
 sudo make install
 sudo ifdown wlan0
 sudo create_ap --no-virt -n -g 192.168.11.22 wlan0 zmj001 66341703
+
+在线升级，上传 gpmb.zip 到 192.168.11.22:9002/upgrade 
+热点名zmj001 热点密码66341703
