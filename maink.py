@@ -51,7 +51,7 @@ except:
     s6='1'
     s7='0'
     ct='0'
-    kconfig.add_section('gpmb') 
+    kconfig.add_section('gpmb')
     kconfig.set("gpmb","s1",s1)
     kconfig.set("gpmb","s2",s2)
     kconfig.set("gpmb","s3",s3)
@@ -162,7 +162,7 @@ class SaveScreen(Screen):
 class PWDScreen(Screen):
     def press_pwd(self,txtn):
         self.pt1.text=self.pt1.text+txtn
-        
+
         if self.lbe.text=='再按一次重启' and txtn=='8':
             KILL_PY()
 

@@ -22,30 +22,30 @@ class OMXPlayer(object):
         self._process = pexpect.spawn(cmd)
         self._end_thread = Thread(target=self._get_end)
         self._end_thread.start()
- 
+
     def _get_end(self):
         while True:
             sleep(0.5)
             index = self._process.expect([pexpect.TIMEOUT,
                                             pexpect.EOF])
-            if index == 1: 
+            if index == 1:
                 print('video press stop EOF '+str(index))
                 #self.stop()
                 break
             else:
                 print('video TIMEOUT '+str(index))
                 #self.stop()
-                #break                
+                #break
                 continue
-        self._VOF=0        
+        self._VOF=0
         #self.stop()
         self._process.send(self._QUIT_CMD)
         self._process.terminate(force=True)
-        if index != 1: 
+        if index != 1:
             self.play('/home/pi/gpmb/video.mp4')
-            
+
     def stop(self):
         self._process.send(self._QUIT_CMD)
         self._process.terminate(force=True)
         #self._process = pexpect.spawn('feh -F '+self._IMG_FILE)
-			
+
